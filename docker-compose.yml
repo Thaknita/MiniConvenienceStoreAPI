@@ -1,0 +1,12 @@
+version: '3'
+services:
+  mini-mart-api-db:
+    container_name: 'mini-mart-db-dev'
+    image: 'postgres:15'
+    environment:
+      - TZ=Asia/Bangkok
+      - POSTGRES_USER=minimart
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=minimart_api
+    ports:
+      - '5449:5432'
