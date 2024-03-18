@@ -29,18 +29,11 @@ public class UserServiceImpl implements UserService{
         if (userRepo.existsByEmailAddress(userCreationDto.emailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.builder()
-                        .roleName("USER")
-                .build());
 
         users.setIsActive(true);
         users.setIsVerified(false);
-        users.setRoles(roles);
 
         userRepo.save(users);
-
-
 
     }
 }

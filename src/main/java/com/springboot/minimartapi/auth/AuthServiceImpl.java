@@ -28,7 +28,6 @@ public class AuthServiceImpl implements AuthService{
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Password doesn't match!");
 
         }
-
         userService.createUser(userRegistrationMapper.fromUserRegistrationDto(userRegistrationDto));
 
         return Map.of("Message","Please check your email to  verify your account ! ");
