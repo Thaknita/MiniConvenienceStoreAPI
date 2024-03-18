@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepo userRepo;
     private final UserMapper userMapper;
-    private final PasswordEncryptor passwordEncryptor;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void createUser(UserCreationDto userCreationDto) {
 
@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService{
 
         users.setIsActive(true);
         users.setIsVerified(false);
+        users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
 
         userRepo.save(users);
 
