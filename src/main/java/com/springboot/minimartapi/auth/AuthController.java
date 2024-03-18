@@ -2,10 +2,8 @@ package com.springboot.minimartapi.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -20,6 +18,8 @@ public class AuthController {
     AuthDto login(@Valid @RequestBody LoginDto loginDto){
         return authService.login(loginDto);
     }
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
     Map<String, Object> register(@Valid @RequestBody UserRegistrationDto userRegistrationDto){
       return  authService.registerUser(userRegistrationDto);
