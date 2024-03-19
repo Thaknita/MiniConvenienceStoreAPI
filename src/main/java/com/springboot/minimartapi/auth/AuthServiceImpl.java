@@ -23,7 +23,6 @@ public class AuthServiceImpl implements AuthService{
     private final DaoAuthenticationProvider daoAuthenticationProvider;
     private final UserRegistrationMapper userRegistrationMapper;
     private final AuthRepo authRepo;
-
     @Override
     public AuthDto login(LoginDto loginDto) {
 
@@ -31,30 +30,29 @@ public class AuthServiceImpl implements AuthService{
                 loginDto.emailAddress(),
                 loginDto.password()
         );
-
         auth = daoAuthenticationProvider.authenticate(auth);
         log.info("Auth: {}", auth);
         log.info("Auth:{}", auth.getName());
         log.info("Auth: {}", auth.getAuthorities());
-
         return null;
     }
     @Transactional
     @Override
     public Map<String, Object> registerUser(UserRegistrationDto userRegistrationDto)  {
-
         if (!userRegistrationDto.password().equals(userRegistrationDto.confirmPassword())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Password doesn't match!");
 
         }
-
         String verifyDigit = RandomNumber.getSixDigit();
-
-        authRepo.updateVerifiedCode(userRegistrationDto.emailAddress(), verifyDigit);
 
         userService.createUser(userRegistrationMapper.fromUserRegistrationDto(userRegistrationDto));
 
+        authRepo.updateVerifiedCode(userRegistrationDto.emailAddress(), verifyDigit);
+
 
         return Map.of("Message","Please check your email to  verify your account ! ");
+
+
+
     }
 }

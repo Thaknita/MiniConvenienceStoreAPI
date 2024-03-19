@@ -1,5 +1,4 @@
 package com.springboot.minimartapi.auth;
-
 import com.springboot.minimartapi.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
