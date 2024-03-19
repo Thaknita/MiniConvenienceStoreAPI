@@ -25,4 +25,9 @@ public class AuthController {
       return  authService.registerUser(userRegistrationDto);
     }
 
+    @PostMapping("/verify")
+    Map<String , Object>  verify(@Valid @RequestBody VerifyUserDto verifyUserDto){
+        return authService.verifyUser(verifyUserDto);
+    }
+
 }

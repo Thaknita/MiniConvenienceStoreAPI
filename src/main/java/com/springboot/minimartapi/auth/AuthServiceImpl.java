@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.auth;
 
+import com.springboot.minimartapi.user.User;
 import com.springboot.minimartapi.user.UserService;
 import com.springboot.minimartapi.util.RandomNumber;
 import lombok.RequiredArgsConstructor;
@@ -41,18 +42,24 @@ public class AuthServiceImpl implements AuthService{
     public Map<String, Object> registerUser(UserRegistrationDto userRegistrationDto)  {
         if (!userRegistrationDto.password().equals(userRegistrationDto.confirmPassword())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Password doesn't match!");
-
         }
         String verifyDigit = RandomNumber.getSixDigit();
-
         userService.createUser(userRegistrationMapper.fromUserRegistrationDto(userRegistrationDto));
-
         authRepo.updateVerifiedCode(userRegistrationDto.emailAddress(), verifyDigit);
-
-
         return Map.of("Message","Please check your email to  verify your account ! ");
+    }
 
+    @Override
+    public Map<String, Object> verifyUser(VerifyUserDto verifyUserDto) {
 
+        User user = authRepo.findByEmailAddressAndVerifyCode(verifyUserDto.emailAddress(), verifyUserDto.verifyCode())
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "incorrect verify code")
+                );
+        user.setIsVerified(true);
+        user.setVerifyCode(null);
+        authRepo.save(user);
 
+        return Map.of("Message", "verified successfully");
     }
 }
