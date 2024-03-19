@@ -25,7 +25,7 @@ public class ValidationException {
         ).toList();
 
         return BasedError.builder()
-                .code(700)
+                .code(800)
                 .error(errors)
                 .message("Requested Data invalid")
                 .timestamp(LocalDateTime.now())
