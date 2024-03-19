@@ -23,10 +23,10 @@ public class UserServiceImpl implements UserService{
 
         User users = userMapper.fromUserCreationDto(userCreationDto);
 
-        if (userRepo.existsByUserName(userCreationDto.userName())){
+        if (userRepo.existsByUserName(users.getUserName())){
             throw  new ResponseStatusException(HttpStatus.CONFLICT, "Username is taken");
         }
-        if (userRepo.existsByEmailAddress(userCreationDto.emailAddress())){
+        if (userRepo.existsByEmailAddress(users.getEmailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
 
