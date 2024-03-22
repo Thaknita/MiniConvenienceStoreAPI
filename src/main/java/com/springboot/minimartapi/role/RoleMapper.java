@@ -7,4 +7,7 @@ import org.mapstruct.Mapper;
 public interface RoleMapper {
     Role fromRoleCreationDto (RoleCreationDto roleCreationDto );
 
+    Role fromRoleRegistrationDto (RoleRegistrationDto roleRegistrationDto);
+
+
 }

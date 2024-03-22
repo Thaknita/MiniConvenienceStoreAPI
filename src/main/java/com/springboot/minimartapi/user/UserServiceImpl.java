@@ -1,6 +1,8 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.auth.AuthRepo;
 import com.springboot.minimartapi.role.Role;
+import com.springboot.minimartapi.role.RoleRepo;
 import com.springboot.minimartapi.security.PasswordEncryptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService{
         if (userRepo.existsByEmailAddress(users.getEmailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
+
 
         users.setIsActive(true);
         users.setIsVerified(false);
