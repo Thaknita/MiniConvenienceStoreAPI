@@ -1,18 +1,25 @@
-package com.springboot.minimartapi.payment;
+/* package com.springboot.minimartapi.payment;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/payments")
+@RequiredArgsConstructor
 public class PaymentController {
 
-    @PostMapping("/create")
-    void createPayment(PaymentCreationDto paymentCreationDto){
+    private final PaymentService paymentService;
 
+    @PostMapping("/create")
+    void createPayment(@Valid @RequestBody PaymentCreationDto paymentCreationDto){
+        paymentService.createPayment(paymentCreationDto);
     }
 
 
 
 }
+*/

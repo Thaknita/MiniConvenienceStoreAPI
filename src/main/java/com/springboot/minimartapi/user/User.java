@@ -1,7 +1,6 @@
 package com.springboot.minimartapi.user;
 
 import com.springboot.minimartapi.order.Order;
-import com.springboot.minimartapi.payment.PaymentInformation;
 import com.springboot.minimartapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -29,8 +28,8 @@ public class User {
     private Boolean isVerified;
     private String deliveryAddress;
 
-    @OneToMany (mappedBy = "user")
-    private List<PaymentInformation> paymentInformation;
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<PaymentInformation> paymentInformation ;
 
     @OneToMany (mappedBy = "user")
     private List<Order> orders;

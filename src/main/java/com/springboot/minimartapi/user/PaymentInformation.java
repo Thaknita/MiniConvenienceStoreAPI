@@ -1,8 +1,13 @@
-package com.springboot.minimartapi.payment;
+package com.springboot.minimartapi.user;
 
 import com.springboot.minimartapi.user.User;
+import com.springboot.minimartapi.user.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Getter
 @Setter
 @Builder
@@ -13,13 +18,13 @@ import lombok.*;
 public class PaymentInformation {
 
     @Id
+    @Column(unique = true, nullable = false)
     private Long cardNumber;
     private String cardType;
-    private String DateMonthExp;
+    private String dateMonthExp;
     private Integer cvc;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
-
 }
