@@ -34,7 +34,7 @@ public class User {
     @OneToMany (mappedBy = "user")
     private List<Order> orders;
 
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.ALL)
     @JoinTable(
            name = "users_roles",
            joinColumns = @JoinColumn(name = "user_id"),

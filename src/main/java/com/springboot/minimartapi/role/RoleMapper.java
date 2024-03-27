@@ -10,4 +10,6 @@ public interface RoleMapper {
     Role fromRoleRegistrationDto (RoleRegistrationDto roleRegistrationDto);
 
 
+
+
 }

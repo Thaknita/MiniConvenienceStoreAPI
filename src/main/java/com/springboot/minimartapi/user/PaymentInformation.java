@@ -5,6 +5,7 @@ import com.springboot.minimartapi.user.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -24,7 +25,8 @@ public class PaymentInformation {
     private String dateMonthExp;
     private Integer cvc;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User user;
+
 }

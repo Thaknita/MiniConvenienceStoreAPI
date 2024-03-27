@@ -19,7 +19,7 @@ public class Authority {
     @GeneratedValue ( strategy = GenerationType.IDENTITY)
     Integer id;
     String authority;
-
     @ManyToMany(mappedBy = "authorities")
+
     List<Role> roles;
 }

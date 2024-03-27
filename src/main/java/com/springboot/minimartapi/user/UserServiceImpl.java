@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserService{
         if (userRepo.existsByEmailAddress(users.getEmailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
-
-
         users.setIsActive(true);
         users.setIsVerified(false);
         users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
@@ -61,17 +59,14 @@ public class UserServiceImpl implements UserService{
 
         paymentRepo.save(paymentInformation);
 
-
-
-
-
-
     }
 
     @Override
-    public PaymentDto listAllPaymentInfo(Long id) {
+    public Set<PaymentInfoDto>  getInfoById(Long id) {
+
+       return paymentMapper.fromPaymentInformation(paymentRepo.findByUserId(id));
 
 
-        return null;
     }
+
 }

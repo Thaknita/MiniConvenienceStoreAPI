@@ -15,6 +15,7 @@ public interface AuthRepo extends JpaRepository<User, Long> {
     """)
     void updateVerifiedCode (String email, String code);
 
+
     Optional<User> findByEmailAddressAndVerifyCode (String emailAddress, String verifyCode);
 
 }
