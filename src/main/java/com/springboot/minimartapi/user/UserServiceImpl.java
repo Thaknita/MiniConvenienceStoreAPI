@@ -1,6 +1,8 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.payment.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService{
 
     private final UserRepo userRepo;
@@ -65,8 +68,25 @@ public class UserServiceImpl implements UserService{
     public Set<PaymentInfoDto>  getInfoById(Long id) {
 
        return paymentMapper.fromPaymentInformation(paymentRepo.findByUserId(id));
+    }
+    @Override
+    public void editPayment(PaymentEditionDto paymentEditionDto, Long cardNum) {
+
+    PaymentInformation paymentInformation = paymentRepo.findPaymentInformationByCardNumber(cardNum)
+            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    System.out.println("Before map " + paymentInformation.getCardType());
+    paymentMapper.fromPaymentEditionDto(paymentInformation, paymentEditionDto);
+    System.out.println(("after map " + paymentInformation.getCardType()));
+
+
+    paymentRepo.save(paymentInformation);
+
 
 
     }
+
+
+
 
 }

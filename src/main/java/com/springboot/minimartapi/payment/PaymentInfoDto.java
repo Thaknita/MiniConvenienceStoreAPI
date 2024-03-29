@@ -1,5 +1,6 @@
-package com.springboot.minimartapi.user;
+package com.springboot.minimartapi.payment;
 
+import com.springboot.minimartapi.user.UserDto;
 import lombok.Builder;
 
 @Builder

@@ -1,4 +1,4 @@
-package com.springboot.minimartapi.user;
+package com.springboot.minimartapi.payment;
 import com.springboot.minimartapi.user.User;
 import com.springboot.minimartapi.user.UserDto;
 import jakarta.validation.constraints.NotBlank;

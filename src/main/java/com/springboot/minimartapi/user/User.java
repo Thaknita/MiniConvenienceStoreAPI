@@ -1,6 +1,7 @@
 package com.springboot.minimartapi.user;
 
 import com.springboot.minimartapi.order.Order;
+import com.springboot.minimartapi.payment.PaymentInformation;
 import com.springboot.minimartapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;

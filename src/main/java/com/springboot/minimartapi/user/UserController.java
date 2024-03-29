@@ -1,11 +1,14 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.payment.PaymentCreationDto;
+import com.springboot.minimartapi.payment.PaymentEditionDto;
+import com.springboot.minimartapi.payment.PaymentInfoDto;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -27,6 +30,11 @@ public class UserController {
     @GetMapping("/payments/{id}")
     Set<PaymentInfoDto> findById(@PathVariable Long id){
        return userService.getInfoById(id);
+    }
+
+    @PutMapping("/payments/update/{cardNum}")
+     void editPayment(@PathVariable Long cardNum, @RequestBody PaymentEditionDto paymentEditionDto){
+        userService.editPayment(paymentEditionDto, cardNum);
     }
 
 
