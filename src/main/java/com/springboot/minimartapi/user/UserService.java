@@ -12,4 +12,6 @@ public interface UserService {
 
     Set<PaymentInfoDto> getInfoById(Long id);
     void editPayment(PaymentEditionDto paymentEditionDto, Long cardNum);
+
+    void deletePaymentByCard(Long cardNum);
 }

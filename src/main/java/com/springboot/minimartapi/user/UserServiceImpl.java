@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
@@ -85,8 +86,17 @@ public class UserServiceImpl implements UserService{
 
 
     }
+    @Transactional
+    @Override
+    public void deletePaymentByCard(Long cardNum) {
+        if (!paymentRepo.existsByCardNumber(cardNum)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card doesn't exist");
+        }
+
+        paymentRepo.deleteByCardNumber(cardNum);
 
 
+    }
 
 
 }

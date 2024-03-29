@@ -26,7 +26,6 @@ public class UserController {
     void createPaymentInfo(@Valid @RequestBody PaymentCreationDto paymentCreationDto){
         userService.createPaymentInfo(paymentCreationDto);
     }
-
     @GetMapping("/payments/{id}")
     Set<PaymentInfoDto> findById(@PathVariable Long id){
        return userService.getInfoById(id);
@@ -36,6 +35,12 @@ public class UserController {
      void editPayment(@PathVariable Long cardNum, @RequestBody PaymentEditionDto paymentEditionDto){
         userService.editPayment(paymentEditionDto, cardNum);
     }
+    @DeleteMapping("/payments/delete/{cardNum}")
+    void deletePaymentInfo(@PathVariable Long cardNum){
+        userService.deletePaymentByCard(cardNum);
+    }
+
+
 
 
 
