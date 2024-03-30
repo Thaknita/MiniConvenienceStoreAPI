@@ -1,6 +1,8 @@
 package com.springboot.minimartapi.user;
 
-import com.springboot.minimartapi.payment.*;
+import com.springboot.minimartapi.user.address.AddressCreationDto;
+import com.springboot.minimartapi.user.address.AddressEditionDto;
+import com.springboot.minimartapi.user.payment.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -72,18 +74,10 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     public void editPayment(PaymentEditionDto paymentEditionDto, Long cardNum) {
-
     PaymentInformation paymentInformation = paymentRepo.findPaymentInformationByCardNumber(cardNum)
             .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-    System.out.println("Before map " + paymentInformation.getCardType());
     paymentMapper.fromPaymentEditionDto(paymentInformation, paymentEditionDto);
-    System.out.println(("after map " + paymentInformation.getCardType()));
-
-
     paymentRepo.save(paymentInformation);
-
-
 
     }
     @Transactional
@@ -92,10 +86,24 @@ public class UserServiceImpl implements UserService{
         if (!paymentRepo.existsByCardNumber(cardNum)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card doesn't exist");
         }
-
         paymentRepo.deleteByCardNumber(cardNum);
+    }
 
-
+    @Override
+    public void createAddress(AddressCreationDto addressCreationDto, Long userId) {
+        User user = userRepo.findUserByUserId(userId).orElseThrow(
+                ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "user invalid"));
+        System.out.println(addressCreationDto.city());
+        String address = addressCreationDto.city()+ " " + addressCreationDto.commune()+ " " + addressCreationDto.village()+ " " +addressCreationDto.street()+ " " +addressCreationDto.houseNumber();
+        System.out.println(address);
+        user.setDeliveryAddress(address);
+        userRepo.save(user);
+    }
+    @Transactional
+    @Override
+    public void editAddressByUserId(Long userId, AddressEditionDto addressEditionDto) {
+        String address = addressEditionDto.city()+" "+addressEditionDto.commune()+" "+ addressEditionDto.village()+" "+addressEditionDto.street()+ " "+addressEditionDto.houseNumber();
+        userRepo.updateDeliveryAddressByUserId(address, userId);
     }
 
 

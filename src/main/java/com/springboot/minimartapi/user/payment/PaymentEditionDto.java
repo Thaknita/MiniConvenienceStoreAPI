@@ -1,4 +1,4 @@
-package com.springboot.minimartapi.payment;
+package com.springboot.minimartapi.user.payment;
 
 import lombok.Builder;
 

@@ -1,13 +1,15 @@
 package com.springboot.minimartapi.user;
 
-import com.springboot.minimartapi.payment.PaymentCreationDto;
-import com.springboot.minimartapi.payment.PaymentEditionDto;
-import com.springboot.minimartapi.payment.PaymentInfoDto;
+import com.springboot.minimartapi.product.Product;
+import com.springboot.minimartapi.user.payment.PaymentCreationDto;
+import com.springboot.minimartapi.user.payment.PaymentEditionDto;
+import com.springboot.minimartapi.user.payment.PaymentInfoDto;
+import com.springboot.minimartapi.user.address.AddressCreationDto;
+import com.springboot.minimartapi.user.address.AddressEditionDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -31,7 +33,7 @@ public class UserController {
        return userService.getInfoById(id);
     }
 
-    @PutMapping("/payments/update/{cardNum}")
+    @PatchMapping("/payments/update/{cardNum}")
      void editPayment(@PathVariable Long cardNum, @RequestBody PaymentEditionDto paymentEditionDto){
         userService.editPayment(paymentEditionDto, cardNum);
     }
@@ -40,8 +42,15 @@ public class UserController {
         userService.deletePaymentByCard(cardNum);
     }
 
+    @PostMapping("/address/create/{userId}")
+    void createDeliveryAddress(@Valid @RequestBody AddressCreationDto addressCreationDto, @PathVariable Long userId){
+        userService.createAddress(addressCreationDto, userId);
+    }
 
-
+    @PatchMapping("/address/edit/{userId}")
+    void editDeliveryAddress(@PathVariable Long userId, @RequestBody AddressEditionDto addressEditionDto ){
+        userService.editAddressByUserId(userId, addressEditionDto);
+    }
 
 
 }

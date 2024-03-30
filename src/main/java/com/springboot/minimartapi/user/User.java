@@ -1,7 +1,8 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.deliveryAddress.DeliveryAddresses;
 import com.springboot.minimartapi.order.Order;
-import com.springboot.minimartapi.payment.PaymentInformation;
+import com.springboot.minimartapi.user.payment.PaymentInformation;
 import com.springboot.minimartapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +28,7 @@ public class User {
     private String verifyCode;
     private Boolean isActive;
     private Boolean isVerified;
+
     private String deliveryAddress;
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
