@@ -1,12 +1,9 @@
 package com.springboot.minimartapi.user;
-
-import com.springboot.minimartapi.deliveryAddress.DeliveryAddresses;
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.user.payment.PaymentInformation;
 import com.springboot.minimartapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
 import java.util.Set;
 @Getter

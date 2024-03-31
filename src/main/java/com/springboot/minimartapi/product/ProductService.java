@@ -6,4 +6,6 @@ public interface ProductService {
 
     List<ProductDto> search(String productName, String productDescription);
 
+    List<ProductDto> listAllProducts();
+
 }
