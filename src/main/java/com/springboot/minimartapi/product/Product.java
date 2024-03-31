@@ -21,7 +21,7 @@ public class Product {
     private Long id;
     private String productName;
     private String productDescription;
-    private Long categoryId;
+    private Integer categoryId;
     private Float price;
     private Long qtyOnHand;
 

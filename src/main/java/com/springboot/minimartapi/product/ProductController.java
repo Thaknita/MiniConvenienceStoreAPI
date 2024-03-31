@@ -1,10 +1,7 @@
 package com.springboot.minimartapi.product;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,9 @@ public class ProductController {
         return productService.listAllProducts();
     }
 
-
-
+    @GetMapping("/{category_id}")
+    List<ProductDto> listByCategory(@PathVariable Integer category_id){
+        return productService.listByCateId(category_id);
+    }
 
 }

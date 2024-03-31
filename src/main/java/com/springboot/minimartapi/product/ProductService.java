@@ -8,4 +8,6 @@ public interface ProductService {
 
     List<ProductDto> listAllProducts();
 
+    List<ProductDto>  listByCateId(Integer cateId);
+
 }

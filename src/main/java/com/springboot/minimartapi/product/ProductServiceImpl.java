@@ -32,4 +32,12 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDto> listAllProducts() {
         return productMapper.toProductDto(productRepo.findAllByIdIsNotNull());
     }
+
+    @Override
+    public List<ProductDto> listByCateId(Integer cateId) {
+        return  productMapper.toProductDto(productRepo.findAllByCategoryId(cateId));
+    }
+
 }
+
+
