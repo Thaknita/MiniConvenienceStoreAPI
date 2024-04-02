@@ -1,6 +1,7 @@
 package com.springboot.minimartapi.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,9 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     List<Product> findAllByCategoryId(Integer categoryId);
 
     Optional<Product> findProductById(Long productId);
+
+    @Modifying
+    void deleteProductById(Long productId);
 
 
 

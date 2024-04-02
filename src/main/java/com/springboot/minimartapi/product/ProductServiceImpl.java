@@ -2,6 +2,7 @@ package com.springboot.minimartapi.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -64,6 +65,17 @@ public class ProductServiceImpl implements ProductService {
         product.setPrice(Optional.ofNullable(productEditionDto.price()).orElse(product.getPrice()));
 
         productRepo.save(product);
+    }
+    @Transactional
+    @Override
+    public void deleteProduct(Long productId) {
+
+      productRepo.findProductById(productId).orElseThrow(
+              ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product does not exist")
+      );
+
+      productRepo.deleteProductById(productId);
+
     }
 
     @Override

@@ -14,6 +14,8 @@ public interface ProductService {
 
     void editProduct(ProductEditionDto productEditionDto, Long productId);
 
+    void deleteProduct(Long productId);
+
     void createCategory(CategoryCreationDto categoryCreationDto);
 
 

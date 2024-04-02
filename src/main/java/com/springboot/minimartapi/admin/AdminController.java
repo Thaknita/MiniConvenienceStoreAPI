@@ -23,6 +23,12 @@ public class AdminController {
     void  editProduct( @RequestBody ProductEditionDto productEditionDto, @PathVariable Long productId){
       productService.editProduct(productEditionDto, productId);
     }
+
+    @DeleteMapping("/products/delete/{productId}")
+    void deleteProduct(@PathVariable Long productId){
+      productService.deleteProduct(productId);
+    }
+
     @PostMapping("/categories/create")
     void  createCategory(@Valid @RequestBody CategoryCreationDto categoryCreationDto)  {
       productService.createCategory(categoryCreationDto);
