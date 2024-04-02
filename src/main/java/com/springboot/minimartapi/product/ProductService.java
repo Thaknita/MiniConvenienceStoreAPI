@@ -10,4 +10,12 @@ public interface ProductService {
 
     List<ProductDto>  listByCateId(Integer cateId);
 
+    void createProduct(ProductCreationDto productCreationDto);
+
+    void editProduct(ProductEditionDto productEditionDto, Long productId);
+
+    void createCategory(CategoryCreationDto categoryCreationDto);
+
+
+
 }

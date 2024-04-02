@@ -21,7 +21,11 @@ public class Product {
     private Long id;
     private String productName;
     private String productDescription;
-    private Integer categoryId;
+
+    @ManyToOne
+    @JoinColumn(name = "cateId", referencedColumnName = "cateId" )
+    private Category category;
+
     private Float price;
     private Long qtyOnHand;
 
