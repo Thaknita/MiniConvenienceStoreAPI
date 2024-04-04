@@ -20,6 +20,5 @@ public class Authority {
     Integer id;
     String authority;
     @ManyToMany(mappedBy = "authorities")
-
     List<Role> roles;
 }

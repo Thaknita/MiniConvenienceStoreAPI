@@ -1,13 +1,8 @@
 package com.springboot.minimartapi.user.payment;
 
 import com.springboot.minimartapi.user.User;
-import com.springboot.minimartapi.user.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 
 @Getter
 @Setter
