@@ -1,7 +1,13 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.product.Product;
+import com.springboot.minimartapi.product.ProductRepo;
 import com.springboot.minimartapi.user.address.AddressCreationDto;
 import com.springboot.minimartapi.user.address.AddressEditionDto;
+import com.springboot.minimartapi.user.cart.AddToCartDto;
+import com.springboot.minimartapi.user.cart.Cart;
+import com.springboot.minimartapi.user.cart.CartMapper;
+import com.springboot.minimartapi.user.cart.CartRepo;
 import com.springboot.minimartapi.user.payment.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +30,10 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
     private final PaymentRepo paymentRepo;
     private final PaymentMapper paymentMapper;
+    private final CartRepo cartRepo;
+    private final CartMapper cartMapper;
+    private final ProductRepo productRepo;
+
     @Override
     public void createUser(UserCreationDto userCreationDto) {
 
@@ -40,6 +50,8 @@ public class UserServiceImpl implements UserService{
         users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
 
         userRepo.save(users);
+
+
 
     }
     @Override
@@ -106,5 +118,26 @@ public class UserServiceImpl implements UserService{
         userRepo.updateDeliveryAddressByUserId(address, userId);
     }
 
+    @Override
+    public void addProductToCart(AddToCartDto addToCartDto) {
 
+        if (productRepo.existsById(addToCartDto.product().getId()) && (productRepo.getQty(addToCartDto.product().getId()) > 0)){
+            if (cartRepo.existsByUserId(addToCartDto.userId())) {
+                Cart carts = cartRepo.findByUserId(addToCartDto.userId());
+                carts.getProducts().add(addToCartDto.product());
+                cartRepo.save(carts);
+            }
+            else {
+            List<Product> products = new ArrayList<>();
+
+            Cart cart = cartMapper.fromAddToCartDto(addToCartDto);
+
+            products.add(addToCartDto.product());
+
+            cart.setProducts(products);
+
+            cartRepo.save(cart); }
+        }
+        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product does not exist");
+    }
 }

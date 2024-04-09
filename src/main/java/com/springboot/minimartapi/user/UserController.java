@@ -1,6 +1,6 @@
 package com.springboot.minimartapi.user;
-
 import com.springboot.minimartapi.product.Product;
+import com.springboot.minimartapi.user.cart.AddToCartDto;
 import com.springboot.minimartapi.user.payment.PaymentCreationDto;
 import com.springboot.minimartapi.user.payment.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.PaymentInfoDto;
@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -52,7 +53,10 @@ public class UserController {
         userService.editAddressByUserId(userId, addressEditionDto);
     }
 
-
+    @PostMapping("/products/cart/add")
+    void addProductToCart(@Valid @RequestBody AddToCartDto addToCartDto){
+        userService.addProductToCart(addToCartDto);
+    }
 
 
 

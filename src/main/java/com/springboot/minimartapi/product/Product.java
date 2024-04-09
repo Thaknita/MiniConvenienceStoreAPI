@@ -2,7 +2,7 @@ package com.springboot.minimartapi.product;
 
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.transaction.Transaction;
-import com.springboot.minimartapi.user.shoppingcart.ShoppingCart;
+import com.springboot.minimartapi.user.cart.Cart;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,8 +36,7 @@ public class Product {
    @OneToMany (mappedBy = "productId")
    private List<Transaction> transactions;
 
-   @ManyToMany (mappedBy = "productList")
-   private List<ShoppingCart> shoppingCarts;
-
+   @ManyToMany (mappedBy = "products")
+   private List<Cart> carts;
 
 }

@@ -1,8 +1,8 @@
 package com.springboot.minimartapi.user;
 import com.springboot.minimartapi.order.Order;
+import com.springboot.minimartapi.user.cart.Cart;
 import com.springboot.minimartapi.user.payment.PaymentInformation;
 import com.springboot.minimartapi.role.Role;
-import com.springboot.minimartapi.user.shoppingcart.ShoppingCart;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;
@@ -43,11 +43,7 @@ public class User {
     )
     private Set<Role> roles;
 
-    @ManyToOne
-    @JoinColumn(name = "referenceCart", referencedColumnName = "reference")
-    private ShoppingCart referenceCart ;
-
-
-
+    @OneToMany (mappedBy = "userId")
+    private List<Cart> carts;
 
 }

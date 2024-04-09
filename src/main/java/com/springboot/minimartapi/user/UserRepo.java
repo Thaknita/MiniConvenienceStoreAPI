@@ -20,4 +20,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
                WHERE u.userId = ?2
 """)
      void updateDeliveryAddressByUserId (String deliveryAddress, Long id);
+
+     Long getReferenceCartByUserId(Long userId);
+
+
 }

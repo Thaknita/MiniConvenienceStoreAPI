@@ -1,10 +1,10 @@
 package com.springboot.minimartapi.auth;
-import com.springboot.minimartapi.role.*;
+
 import com.springboot.minimartapi.user.User;
-import com.springboot.minimartapi.user.UserRepo;
+
 import com.springboot.minimartapi.user.UserService;
 import com.springboot.minimartapi.util.RandomNumber;
-import com.springboot.minimartapi.util.StringToEntity;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,6 @@ public class AuthServiceImpl implements AuthService{
     private final DaoAuthenticationProvider daoAuthenticationProvider;
     private final UserRegistrationMapper userRegistrationMapper;
     private final AuthRepo authRepo;
-    private final RoleMapper roleMapper;
 
     @Override
     public AuthDto login(LoginDto loginDto) {
@@ -63,7 +62,9 @@ public class AuthServiceImpl implements AuthService{
         user.setIsVerified(true);
         user.setVerifyCode(null);
 
+
         authRepo.save(user);
+
 
         return Map.of("Message", "verified successfully");
     }

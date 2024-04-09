@@ -21,5 +21,14 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     @Modifying
     void deleteProductById(Long productId);
 
+    boolean existsById(Long id);
+
+    @Query("""
+    SELECT p.qtyOnHand FROM Product as p WHERE p.id = ?1
+""")
+    Long getQty(Long id);
+
+
+
 
 }
