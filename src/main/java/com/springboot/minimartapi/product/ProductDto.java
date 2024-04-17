@@ -7,7 +7,7 @@ public record ProductDto(
       Long id,
       String productName,
       String productDescription,
-      Long categoryId,
+      Integer categoryId,
       Float price,
       Long qtyOnHand
 ) {

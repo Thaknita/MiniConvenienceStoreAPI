@@ -2,7 +2,7 @@ package com.springboot.minimartapi.product;
 
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.transaction.Transaction;
-import com.springboot.minimartapi.user.cart.Cart;
+import com.springboot.minimartapi.user.CartItem;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +19,8 @@ public class Product {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long productId;
+
     private String productName;
     private String productDescription;
 
@@ -36,7 +37,8 @@ public class Product {
    @OneToMany (mappedBy = "productId")
    private List<Transaction> transactions;
 
-   @ManyToMany (mappedBy = "products")
-   private List<Cart> carts;
+   @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems;
+
 
 }

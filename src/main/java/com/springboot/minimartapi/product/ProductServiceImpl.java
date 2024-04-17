@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> listAllProducts() {
-        return productMapper.toProductDto(productRepo.findAllByIdIsNotNull());
+        return productMapper.toProductDto(productRepo.findAllByProductIdIsNotNull());
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void editProduct(ProductEditionDto productEditionDto, Long productId) {
 
-        Product product = productRepo.findProductById(productId).orElseThrow(
+        Product product = productRepo.findProductByProductId(productId).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not exist")
         );
 
@@ -70,11 +70,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long productId) {
 
-      productRepo.findProductById(productId).orElseThrow(
+      productRepo.findProductByProductId(productId).orElseThrow(
               ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product does not exist")
       );
 
-      productRepo.deleteProductById(productId);
+      productRepo.deleteProductByProductId(productId);
 
     }
 

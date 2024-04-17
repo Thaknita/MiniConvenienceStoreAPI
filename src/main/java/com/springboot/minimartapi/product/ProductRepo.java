@@ -12,21 +12,20 @@ import java.util.Optional;
 public interface ProductRepo extends JpaRepository<Product,Long> {
     List<Product> findByProductDescriptionContainingIgnoreCase(String productDescription);
     List<Product> findByProductNameContainingIgnoreCase(String productName);
-    List<Product> findAllByIdIsNotNull();
+    List<Product> findAllByProductIdIsNotNull();
     @Query("""
     SELECT p FROM Product as p where p.category.cateId=?1
 """)
     List<Product> findAllByCategoryId(Integer categoryId);
-    Optional<Product> findProductById(Long productId);
+    Optional<Product> findProductByProductId(Long productId);
     @Modifying
-    void deleteProductById(Long productId);
-
-    boolean existsById(Long id);
+    void deleteProductByProductId(Long productId);
 
     @Query("""
-    SELECT p.qtyOnHand FROM Product as p WHERE p.id = ?1
-""")
-    Long getQty(Long id);
+        SELECT p.qtyOnHand from Product as p WHERE p.productId =?1
+    """)
+    Long qtyOnHand(Long productId);
+
 
 
 

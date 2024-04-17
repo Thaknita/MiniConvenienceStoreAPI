@@ -6,6 +6,9 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
 
     User fromUserCreationDto (UserCreationDto userCreationDto);
+    User fromUserDto (UserDto userDto);
+
+
 
 
 }

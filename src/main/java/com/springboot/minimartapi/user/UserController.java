@@ -1,6 +1,6 @@
 package com.springboot.minimartapi.user;
-import com.springboot.minimartapi.product.Product;
-import com.springboot.minimartapi.user.cart.AddToCartDto;
+import com.springboot.minimartapi.product.ProductDto;
+import com.springboot.minimartapi.product.ProductInCartDto;
 import com.springboot.minimartapi.user.payment.PaymentCreationDto;
 import com.springboot.minimartapi.user.payment.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.PaymentInfoDto;
@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -53,10 +52,20 @@ public class UserController {
         userService.editAddressByUserId(userId, addressEditionDto);
     }
 
-    @PostMapping("/products/cart/add")
-    void addProductToCart(@Valid @RequestBody AddToCartDto addToCartDto){
-        userService.addProductToCart(addToCartDto);
+    @PostMapping("/carts/add/{userId}")
+    void addProductToCart(@RequestBody CartItemDto product, @PathVariable Long userId){
+        userService.addProductToCart(product,UserDto.builder().userId(userId).build());
     }
+
+    @GetMapping("/carts/{userId}")
+    List<ProductInCartDto> listProductInCart(@PathVariable Long userId){
+        return userService.listProductInCart(UserDto.builder().userId(userId).build());
+    }
+
+
+
+
+
 
 
 

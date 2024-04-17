@@ -1,12 +1,14 @@
 package com.springboot.minimartapi.user;
 
-import com.springboot.minimartapi.user.cart.AddToCartDto;
+import com.springboot.minimartapi.product.ProductDto;
+import com.springboot.minimartapi.product.ProductInCartDto;
 import com.springboot.minimartapi.user.payment.PaymentCreationDto;
 import com.springboot.minimartapi.user.payment.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.PaymentInfoDto;
 import com.springboot.minimartapi.user.address.AddressCreationDto;
 import com.springboot.minimartapi.user.address.AddressEditionDto;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,5 +25,9 @@ public interface UserService {
 
     void editAddressByUserId(Long userId, AddressEditionDto addressEditionDto);
 
-    void addProductToCart(AddToCartDto addToCartDto);
+    void addProductToCart(CartItemDto cartItemDto, UserDto userId);
+
+    List<ProductInCartDto> listProductInCart(UserDto userId);
+
+
 }

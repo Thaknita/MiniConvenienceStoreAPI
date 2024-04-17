@@ -1,13 +1,10 @@
 package com.springboot.minimartapi.user;
 
-import com.springboot.minimartapi.product.Product;
-import com.springboot.minimartapi.product.ProductRepo;
+
+import com.springboot.minimartapi.product.*;
 import com.springboot.minimartapi.user.address.AddressCreationDto;
 import com.springboot.minimartapi.user.address.AddressEditionDto;
-import com.springboot.minimartapi.user.cart.AddToCartDto;
-import com.springboot.minimartapi.user.cart.Cart;
-import com.springboot.minimartapi.user.cart.CartMapper;
-import com.springboot.minimartapi.user.cart.CartRepo;
+
 import com.springboot.minimartapi.user.payment.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.*;
-import java.util.stream.Stream;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +28,10 @@ public class UserServiceImpl implements UserService{
     private final PaymentRepo paymentRepo;
     private final PaymentMapper paymentMapper;
     private final CartRepo cartRepo;
-    private final CartMapper cartMapper;
     private final ProductRepo productRepo;
+    private final CartItemMapper cartItemMapper;
+    private final CartItemRepo cartItemRepo;
+    private final ProductMapper productMapper;
 
     @Override
     public void createUser(UserCreationDto userCreationDto) {
@@ -50,8 +49,6 @@ public class UserServiceImpl implements UserService{
         users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
 
         userRepo.save(users);
-
-
 
     }
     @Override
@@ -117,27 +114,47 @@ public class UserServiceImpl implements UserService{
         String address = addressEditionDto.city()+" "+addressEditionDto.commune()+" "+ addressEditionDto.village()+" "+addressEditionDto.street()+ " "+addressEditionDto.houseNumber();
         userRepo.updateDeliveryAddressByUserId(address, userId);
     }
-
     @Override
-    public void addProductToCart(AddToCartDto addToCartDto) {
+    public void addProductToCart(CartItemDto cartItemDto, UserDto userId) {
+      User user =  userMapper.fromUserDto(userId);
 
-        if (productRepo.existsById(addToCartDto.product().getId()) && (productRepo.getQty(addToCartDto.product().getId()) > 0)){
-            if (cartRepo.existsByUserId(addToCartDto.userId())) {
-                Cart carts = cartRepo.findByUserId(addToCartDto.userId());
-                carts.getProducts().add(addToCartDto.product());
-                cartRepo.save(carts);
-            }
-            else {
-            List<Product> products = new ArrayList<>();
+      if ( productRepo.qtyOnHand(cartItemDto.productId()) < cartItemDto.qty() ){
+          throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "insufficient qty in stock");
+      }
 
-            Cart cart = cartMapper.fromAddToCartDto(addToCartDto);
-
-            products.add(addToCartDto.product());
-
-            cart.setProducts(products);
-
-            cartRepo.save(cart); }
-        }
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product does not exist");
+        Product product = productRepo.findProductByProductId(cartItemDto.productId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "product is not exist")
+        );
+      if (!cartRepo.existsByUserId(user)){
+          Cart cart = new Cart();
+          cart.setUserId(user);
+          cartRepo.save(cart);
+      }
+      Cart cart = cartRepo.findCartByUserId(user);
+      CartItem cartItem = cartItemMapper.fromCartItemDto(cartItemDto);
+      cartItem.setReference(cart);
+      cartItem.setProduct(product);
+      cartItemRepo.save(cartItem);
     }
+    @Override
+    public List<ProductInCartDto> listProductInCart(UserDto userId) {
+        User user = userMapper.fromUserDto(userId);
+        Cart cart = cartRepo.findCartByUserId(user);
+
+        List<CartItem> cartItems = cartItemRepo.findCartItemByReference(cart);
+
+        List<ProductInCartDto> productInCartDtoList = new ArrayList<>();
+
+        cartItems.forEach(
+                cartItem -> productInCartDtoList.add(
+                           ProductInCartDto.builder()
+                                   .productName(cartItemRepo.productName(cartItem.getProduct()))
+                                   .price(cartItemRepo.price(cartItem.getProduct()))
+                                   .qty(cartItemRepo.qty(cartItem.getProduct()))
+                                   .build())
+        );
+        return productInCartDtoList;
+    }
+
 }
+
