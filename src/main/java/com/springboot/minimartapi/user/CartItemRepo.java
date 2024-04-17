@@ -12,9 +12,12 @@ public interface CartItemRepo extends JpaRepository<CartItem, Long> {
     List<CartItem> findCartItemByReference(Cart cart);
 
     @Query("""
-    SELECT c.qty from CartItem as c WHERE c.product = ?1
+    SELECT SUM(c.qty) AS total_qty
+    FROM CartItem c
+    WHERE c.product = ?1
     """)
-    Long qty (Product product);
+    Long qty(Product product);
+
 
     @Query("""
     SELECT c.product.productName from CartItem as c WHERE c.product = ?1
