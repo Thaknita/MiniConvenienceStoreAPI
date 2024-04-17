@@ -7,8 +7,8 @@ import java.util.Optional;
 public interface CartRepo extends JpaRepository<Cart, Long> {
 
    Cart findCartByUserId(User userId);
-
     Boolean existsByUserId(User userId);
+
 
 
 

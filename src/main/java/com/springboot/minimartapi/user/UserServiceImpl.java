@@ -155,6 +155,16 @@ public class UserServiceImpl implements UserService{
         );
         return productInCartDtoList;
     }
+    @Transactional
+    @Override
+    public void deleteItemInCart(Long userId, ProductToRemoveFromCartDto productId) {
+        UserDto userDto = UserDto.builder().userId(userId).build();
+        User user = userMapper.fromUserDto(userDto);
+        Cart cart = cartRepo.findCartByUserId(user);
+        Product product = productMapper.toProduct(productId);
+        cartItemRepo.deleteCartItemsByProductAndReference(product, cart);
+
+    }
 
 }
 

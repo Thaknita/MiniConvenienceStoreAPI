@@ -18,6 +18,8 @@ Product fromProductToAddDto(ProductToAddDto product);
 
 List<ProductDto> toProductDtoList(List<Product> products);
 
+Product toProduct(ProductToRemoveFromCartDto product);
+
 
 
 }

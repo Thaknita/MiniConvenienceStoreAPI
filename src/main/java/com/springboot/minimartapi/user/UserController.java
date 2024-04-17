@@ -1,6 +1,6 @@
 package com.springboot.minimartapi.user;
-import com.springboot.minimartapi.product.ProductDto;
 import com.springboot.minimartapi.product.ProductInCartDto;
+import com.springboot.minimartapi.product.ProductToRemoveFromCartDto;
 import com.springboot.minimartapi.user.payment.PaymentCreationDto;
 import com.springboot.minimartapi.user.payment.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.PaymentInfoDto;
@@ -62,6 +62,10 @@ public class UserController {
         return userService.listProductInCart(UserDto.builder().userId(userId).build());
     }
 
+    @DeleteMapping("/carts/delete/{userId}")
+    void deleteProductFromCart(@PathVariable Long userId, @RequestBody ProductToRemoveFromCartDto productId){
+        userService.deleteItemInCart(userId, productId);
+    }
 
 
 
