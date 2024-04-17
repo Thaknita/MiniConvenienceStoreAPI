@@ -4,6 +4,9 @@ import com.springboot.minimartapi.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder

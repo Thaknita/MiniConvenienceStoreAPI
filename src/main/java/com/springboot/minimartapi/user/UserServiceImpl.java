@@ -141,16 +141,16 @@ public class UserServiceImpl implements UserService{
         User user = userMapper.fromUserDto(userId);
         Cart cart = cartRepo.findCartByUserId(user);
 
-        List<CartItem> cartItems = cartItemRepo.findCartItemByReference(cart);
+        List<Product> products = cartItemRepo.listCartItems(cart);
 
         List<ProductInCartDto> productInCartDtoList = new ArrayList<>();
 
-        cartItems.forEach(
+        products.forEach(
                 cartItem -> productInCartDtoList.add(
                            ProductInCartDto.builder()
-                                   .productName(cartItemRepo.productName(cartItem.getProduct()))
-                                   .price(cartItemRepo.price(cartItem.getProduct()))
-                                   .qty(cartItemRepo.qty(cartItem.getProduct()))
+                                   .productName(cartItemRepo.productName(cartItem))
+                                   .price(cartItemRepo.price(cartItem))
+                                   .qty(cartItemRepo.qty(cartItem))
                                    .build())
         );
         return productInCartDtoList;
