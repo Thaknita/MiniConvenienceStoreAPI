@@ -156,6 +156,7 @@ public class UserServiceImpl implements UserService{
         products.forEach(
                 cartItem -> productInCartDtoList.add(
                            ProductInCartDto.builder()
+                                   .productId(cartItem.getProductId())
                                    .productName(cartItemRepo.productName(cartItem))
                                    .price(cartItemRepo.price(cartItem))
                                    .qty(cartItemRepo.qty(cartItem))
@@ -171,7 +172,6 @@ public class UserServiceImpl implements UserService{
         Cart cart = cartRepo.findCartByUserId(user);
         Product product = productMapper.toProduct(productId);
         cartItemRepo.deleteCartItemsByProductAndReference(product, cart);
-
     }
     @Transactional
     @Override
@@ -187,6 +187,7 @@ public class UserServiceImpl implements UserService{
         }
 
         List<ProductInCartDto> productInCartDtoList = this.listProductInCart(UserDto.builder().userId(userId).build());
+
         OrderDto orderDto = OrderDto.builder()
                .orderStatus("await to confirm")
                .orderDate(LocalDateTime.now())
@@ -197,6 +198,18 @@ public class UserServiceImpl implements UserService{
                .grandTotal((cartItemRepo.totalPrice(cart)+(cartItemRepo.totalPrice(cart) * 0.1 )  ))
                .build();
 
+        orderDto.productList().forEach(
+                product -> {
+                   if ( product.qty() > productRepo.qtyOnHand(product.productId()) ){
+                       System.out.println(product.productId()+ "productId");
+                       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product out of stock");
+                   }
+                   else{
+                        Long newQty = productRepo.qtyOnHand(product.productId()) - product.qty();
+                        productRepo.updateQty(product.productId(), newQty );
+                   }
+                }
+        );
         Order order = orderMapper.toOrder(orderDto);
 
         orderRepo.save(order);

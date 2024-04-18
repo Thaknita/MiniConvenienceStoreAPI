@@ -25,6 +25,15 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
         SELECT p.qtyOnHand from Product as p WHERE p.productId =?1
     """)
     Long qtyOnHand(Long productId);
+    @Modifying
+    @Query("""
+        UPDATE Product as p
+        SET p.qtyOnHand = ?2
+        WHERE p.productId =?1
+    """)
+    void updateQty(Long productId, Long newQty);
+
+
 
 
 
