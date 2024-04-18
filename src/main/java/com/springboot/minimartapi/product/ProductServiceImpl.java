@@ -45,20 +45,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createProduct(ProductCreationDto productCreationDto) {
-
+        Category category = categoryMapper.fromCateDto(productCreationDto.category());
         Product product = productMapper.fromProductCreationDto(productCreationDto);
+        product.setCategory(category);
 
         productRepo.save(product);
-
     }
-
     @Override
     public void editProduct(ProductEditionDto productEditionDto, Long productId) {
 
         Product product = productRepo.findProductByProductId(productId).orElseThrow(
                 ()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not exist")
         );
-
         product.setProductName(Optional.ofNullable(productEditionDto.productName()).orElse(product.getProductName()));
         product.setProductDescription(Optional.ofNullable(productEditionDto.productDescription()).orElse(product.getProductDescription()));
         product.setCategory(Optional.ofNullable(productEditionDto.category()).orElse(product.getCategory()));

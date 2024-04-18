@@ -5,6 +5,7 @@ import com.springboot.minimartapi.transaction.Transaction;
 import com.springboot.minimartapi.user.carts.CartItem;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Product {
     private String productDescription;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "cateId", referencedColumnName = "cateId" )
     private Category category;
 

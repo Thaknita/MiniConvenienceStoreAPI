@@ -11,9 +11,11 @@ public record ProductCreationDto(
     @NotBlank
     String productDescription,
     @NotNull
-    Category category,
+    CategoryDto category,
     @NotNull
-    Float price
+    Double price,
+    @NotNull
+    Long qtyOnHand
 
 ) {
 }
