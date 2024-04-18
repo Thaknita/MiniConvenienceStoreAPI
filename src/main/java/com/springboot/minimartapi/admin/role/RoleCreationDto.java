@@ -1,4 +1,4 @@
-package com.springboot.minimartapi.role;
+package com.springboot.minimartapi.admin.role;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

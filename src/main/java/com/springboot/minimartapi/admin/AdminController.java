@@ -1,5 +1,9 @@
 package com.springboot.minimartapi.admin;
 
+import com.springboot.minimartapi.admin.role.Role;
+import com.springboot.minimartapi.admin.role.RoleCreationDto;
+import com.springboot.minimartapi.admin.role.RoleEditionDto;
+import com.springboot.minimartapi.admin.role.RoleService;
 import com.springboot.minimartapi.product.CategoryCreationDto;
 import com.springboot.minimartapi.product.ProductCreationDto;
 import com.springboot.minimartapi.product.ProductEditionDto;
@@ -13,6 +17,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/admin")
 public class AdminController {
   private final ProductService productService;
+  private final RoleService roleService;
+
+  @PostMapping("/roles/create")
+  void createRole(@Valid @RequestBody RoleCreationDto roleCreationDto){
+    roleService.createRole(roleCreationDto);
+  }
+
+  @PatchMapping("/roles/edit/{roleId}")
+  void editRole(@PathVariable Integer roleId, @RequestBody RoleEditionDto roleEditionDto){
+     roleService.editRole(roleId, roleEditionDto);
+  }
 
   @PostMapping("/products/create")
   void  creatProduct(@Valid @RequestBody ProductCreationDto productCreationDto){
@@ -33,6 +48,9 @@ public class AdminController {
     void  createCategory(@Valid @RequestBody CategoryCreationDto categoryCreationDto)  {
       productService.createCategory(categoryCreationDto);
     }
+
+
+
 
 
 

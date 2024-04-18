@@ -1,10 +1,10 @@
 
-package com.springboot.minimartapi.role;
+package com.springboot.minimartapi.admin.role;
 
-import com.springboot.minimartapi.auth.AuthRepo;
-import com.springboot.minimartapi.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 @RequiredArgsConstructor
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -13,12 +13,16 @@ public class RoleServiceImpl implements RoleService {
     private final RoleMapper roleMapper;
     @Override
     public void createRole(RoleCreationDto roleCreationDto) {
-
       Role role =  roleMapper.fromRoleCreationDto(roleCreationDto);
-
       roleRepo.save(role);
-
+    }
+    @Transactional
+    @Override
+    public void editRole(Integer roleId, RoleEditionDto roleEditionDto) {
+        String roleName = roleEditionDto.roleName();
+        roleRepo.updateRoleName(roleId, roleName );
 
     }
+
 
 }

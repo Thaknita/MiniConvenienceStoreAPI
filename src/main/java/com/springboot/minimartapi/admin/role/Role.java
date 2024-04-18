@@ -1,4 +1,4 @@
-package com.springboot.minimartapi.role;
+package com.springboot.minimartapi.admin.role;
 import com.springboot.minimartapi.auth.Authority;
 import com.springboot.minimartapi.user.User;
 import jakarta.persistence.*;
