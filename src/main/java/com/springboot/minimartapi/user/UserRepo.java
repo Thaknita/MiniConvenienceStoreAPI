@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.user.payment.PaymentInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +22,9 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 """)
      void updateDeliveryAddressByUserId (String deliveryAddress, Long id);
 
-     Long getReferenceCartByUserId(Long userId);
-
+     @Query("""
+     SELECT u.paymentInformation FROM User as u WHERE u.userId =?1
+     """)
+     PaymentInformation paymentInfo(Long userId);
 
 }

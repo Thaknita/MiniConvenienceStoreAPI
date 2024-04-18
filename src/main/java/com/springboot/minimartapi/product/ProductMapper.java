@@ -12,7 +12,6 @@ Product fromProductCreationDto (ProductCreationDto productCreationDto);
 
 void fromProductEditionDto ( ProductEditionDto productEditionDto,@MappingTarget Product product);
 
-List<ProductInCartDto> toProductInCartDto(List<Product> products);
 
 Product fromProductToAddDto(ProductToAddDto product);
 

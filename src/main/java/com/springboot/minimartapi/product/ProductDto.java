@@ -8,7 +8,7 @@ public record ProductDto(
       String productName,
       String productDescription,
       Integer categoryId,
-      Float price,
+      Double price,
       Long qtyOnHand
 ) {
 }

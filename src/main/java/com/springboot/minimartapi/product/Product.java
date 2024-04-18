@@ -2,7 +2,7 @@ package com.springboot.minimartapi.product;
 
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.transaction.Transaction;
-import com.springboot.minimartapi.user.CartItem;
+import com.springboot.minimartapi.user.carts.CartItem;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +28,7 @@ public class Product {
     @JoinColumn(name = "cateId", referencedColumnName = "cateId" )
     private Category category;
 
-    private Float price;
+    private Double price;
     private Long qtyOnHand;
 
    @ManyToMany (mappedBy = "products")

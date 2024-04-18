@@ -1,4 +1,4 @@
-package com.springboot.minimartapi.user;
+package com.springboot.minimartapi.user.carts;
 
 import org.mapstruct.Mapper;
 

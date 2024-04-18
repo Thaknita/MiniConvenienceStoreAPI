@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.user;
 import com.springboot.minimartapi.order.Order;
+import com.springboot.minimartapi.user.carts.Cart;
 import com.springboot.minimartapi.user.payment.PaymentInformation;
 import com.springboot.minimartapi.role.Role;
 import jakarta.persistence.*;

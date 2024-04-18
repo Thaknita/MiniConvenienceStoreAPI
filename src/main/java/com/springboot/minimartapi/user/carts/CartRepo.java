@@ -1,8 +1,7 @@
-package com.springboot.minimartapi.user;
+package com.springboot.minimartapi.user.carts;
 
+import com.springboot.minimartapi.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
 
 public interface CartRepo extends JpaRepository<Cart, Long> {
 

@@ -1,11 +1,8 @@
-package com.springboot.minimartapi.user;
+package com.springboot.minimartapi.user.carts;
 
 import com.springboot.minimartapi.product.Product;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -15,17 +12,13 @@ import java.util.Set;
 @Entity
 @Table(name = "cart_item")
 public class CartItem {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Long qty;
-
     @ManyToOne
     @JoinColumn(name = "reference", referencedColumnName = "reference")
     private Cart reference;
-
     @ManyToOne
     @JoinColumn(name = "product", referencedColumnName = "productId")
     private Product product;

@@ -13,15 +13,12 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long orderNumber;
-
-    private Float totalPrice;
-    private Float vat;
-    private Float grandTotal;
-
+    private Double totalPrice;
+    private Double vat;
+    private Double grandTotal;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "userId")
     private User userId;
@@ -29,13 +26,11 @@ public class Order {
     private String orderStatus;
     private LocalDateTime orderDate;
     private LocalDateTime receivedDate;
-
     @ManyToMany
     @JoinTable(name = "orders_products",
             joinColumns = @JoinColumn(name = "order_number"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
     private List<Product> products;
-
 
 }

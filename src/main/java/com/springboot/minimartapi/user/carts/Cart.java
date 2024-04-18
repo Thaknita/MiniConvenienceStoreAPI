@@ -1,5 +1,6 @@
-package com.springboot.minimartapi.user;
+package com.springboot.minimartapi.user.carts;
 
+import com.springboot.minimartapi.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 

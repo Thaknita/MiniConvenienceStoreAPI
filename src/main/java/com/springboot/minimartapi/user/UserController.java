@@ -1,6 +1,7 @@
 package com.springboot.minimartapi.user;
 import com.springboot.minimartapi.product.ProductInCartDto;
 import com.springboot.minimartapi.product.ProductToRemoveFromCartDto;
+import com.springboot.minimartapi.user.carts.CartItemDto;
 import com.springboot.minimartapi.user.payment.PaymentCreationDto;
 import com.springboot.minimartapi.user.payment.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.PaymentInfoDto;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -65,6 +67,11 @@ public class UserController {
     @DeleteMapping("/carts/delete/{userId}")
     void deleteProductFromCart(@PathVariable Long userId, @RequestBody ProductToRemoveFromCartDto productId){
         userService.deleteItemInCart(userId, productId);
+    }
+
+    @PostMapping("/orders/place/{userId}")
+    Map<String, Object> placeOrder(@PathVariable Long userId){
+        return userService.placeOrder(userId);
     }
 
 

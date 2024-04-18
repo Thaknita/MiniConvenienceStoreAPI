@@ -1,10 +1,15 @@
 package com.springboot.minimartapi.user;
 
 
+import com.springboot.minimartapi.order.Order;
+import com.springboot.minimartapi.order.OrderDto;
+import com.springboot.minimartapi.order.OrderMapper;
+import com.springboot.minimartapi.order.OrderRepo;
 import com.springboot.minimartapi.product.*;
 import com.springboot.minimartapi.user.address.AddressCreationDto;
 import com.springboot.minimartapi.user.address.AddressEditionDto;
 
+import com.springboot.minimartapi.user.carts.*;
 import com.springboot.minimartapi.user.payment.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -32,6 +38,8 @@ public class UserServiceImpl implements UserService{
     private final CartItemMapper cartItemMapper;
     private final CartItemRepo cartItemRepo;
     private final ProductMapper productMapper;
+    private final OrderMapper orderMapper;
+    private final OrderRepo orderRepo;
 
     @Override
     public void createUser(UserCreationDto userCreationDto) {
@@ -163,6 +171,39 @@ public class UserServiceImpl implements UserService{
         Cart cart = cartRepo.findCartByUserId(user);
         Product product = productMapper.toProduct(productId);
         cartItemRepo.deleteCartItemsByProductAndReference(product, cart);
+
+    }
+    @Transactional
+    @Override
+    public Map<String, Object> placeOrder(Long userId) {
+
+        Cart cart = cartRepo.findCartByUserId(userMapper.fromUserDto(UserDto.builder().userId(userId).build()));
+
+        if (cartItemRepo.totalPrice(cart) == null ){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No item in Cart");
+        }
+        if(userRepo.paymentInfo(userId) == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no payment method to purchase");
+        }
+
+        List<ProductInCartDto> productInCartDtoList = this.listProductInCart(UserDto.builder().userId(userId).build());
+        OrderDto orderDto = OrderDto.builder()
+               .orderStatus("await to confirm")
+               .orderDate(LocalDateTime.now())
+               .userId(UserDto.builder().userId(userId).build())
+               .productList(productInCartDtoList)
+               .totalPrice(cartItemRepo.totalPrice(cart))
+               .vat((cartItemRepo.totalPrice(cart) * 0.1 ))
+               .grandTotal((cartItemRepo.totalPrice(cart)+(cartItemRepo.totalPrice(cart) * 0.1 )  ))
+               .build();
+
+        Order order = orderMapper.toOrder(orderDto);
+
+        orderRepo.save(order);
+
+        cartItemRepo.cleanCart(cart);
+
+        return Map.of("Order placed await to confirm", orderDto  );
 
     }
 
