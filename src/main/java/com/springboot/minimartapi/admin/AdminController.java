@@ -8,6 +8,7 @@ import com.springboot.minimartapi.product.CategoryCreationDto;
 import com.springboot.minimartapi.product.ProductCreationDto;
 import com.springboot.minimartapi.product.ProductEditionDto;
 import com.springboot.minimartapi.product.ProductService;
+import com.springboot.minimartapi.user.UserRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
   private final ProductService productService;
   private final RoleService roleService;
+  private final AdminService adminService;
 
   @PostMapping("/roles/create")
   void createRole(@Valid @RequestBody RoleCreationDto roleCreationDto){
@@ -27,6 +29,16 @@ public class AdminController {
   @PatchMapping("/roles/edit/{roleId}")
   void editRole(@PathVariable Integer roleId, @RequestBody RoleEditionDto roleEditionDto){
      roleService.editRole(roleId, roleEditionDto);
+  }
+
+  @PatchMapping("/users/deactivate/{userId}")
+  void deactivateUser(@PathVariable Long userId){
+    adminService.deactivateUser(userId);
+  }
+
+  @DeleteMapping("/users/delete/{userId}")
+  void deleteUser(@PathVariable Long userId){
+    adminService.deleteUser(userId);
   }
 
   @PostMapping("/products/create")

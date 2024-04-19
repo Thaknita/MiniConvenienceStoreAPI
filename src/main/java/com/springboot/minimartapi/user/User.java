@@ -26,7 +26,6 @@ public class User {
     private String verifyCode;
     private Boolean isActive;
     private Boolean isVerified;
-
     private String deliveryAddress;
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)

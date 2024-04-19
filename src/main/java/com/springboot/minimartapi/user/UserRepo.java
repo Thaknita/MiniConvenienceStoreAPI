@@ -27,6 +27,15 @@ public interface UserRepo extends JpaRepository<User, Integer> {
      SELECT u.paymentInformation FROM User as u WHERE u.userId =?1
      """)
      PaymentInformation paymentInfo(Long userId);
+     @Modifying
+     @Query("""
+     UPDATE User u
+     SET u.isActive = false
+     WHERE u.userId =?1
+     """)
+     void deactivateUser(Long userId);
+
+     void deleteByUserId(Long userId);
 
 
 }
