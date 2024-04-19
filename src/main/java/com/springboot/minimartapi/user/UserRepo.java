@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.user;
 
+import com.springboot.minimartapi.admin.role.Role;
 import com.springboot.minimartapi.user.payment.PaymentInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -26,5 +27,6 @@ public interface UserRepo extends JpaRepository<User, Integer> {
      SELECT u.paymentInformation FROM User as u WHERE u.userId =?1
      """)
      PaymentInformation paymentInfo(Long userId);
+
 
 }

@@ -16,4 +16,5 @@ public interface RoleRepo extends JpaRepository<Role, Long> {
     void updateRoleName(Integer roleId, String roleName);
 
 
+
 }

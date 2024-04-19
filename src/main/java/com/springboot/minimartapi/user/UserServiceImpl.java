@@ -1,6 +1,9 @@
 package com.springboot.minimartapi.user;
 
 
+import com.springboot.minimartapi.admin.role.Role;
+import com.springboot.minimartapi.admin.role.RoleDto;
+import com.springboot.minimartapi.admin.role.RoleMapper;
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.order.OrderDto;
 import com.springboot.minimartapi.order.OrderMapper;
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService{
     private final ProductMapper productMapper;
     private final OrderMapper orderMapper;
     private final OrderRepo orderRepo;
-
+    private final RoleMapper roleMapper;
     @Override
     public void createUser(UserCreationDto userCreationDto) {
 
@@ -52,6 +55,11 @@ public class UserServiceImpl implements UserService{
         if (userRepo.existsByEmailAddress(users.getEmailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
+
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleMapper.fromRoleDto(RoleDto.builder().id(1).build()));
+
+        users.setRoles(roles);
         users.setIsActive(true);
         users.setIsVerified(false);
         users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
@@ -65,8 +73,6 @@ public class UserServiceImpl implements UserService{
        if (paymentRepo.existsByCardNumber(paymentCreationDto.cardNumber())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "card is already been used");
         }
-
-
 
         PaymentInformation paymentInformation = paymentMapper.fromPaymentCreationDto(paymentCreationDto);
 
