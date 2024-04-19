@@ -1,8 +1,10 @@
 package com.springboot.minimartapi.auth;
 
-import com.springboot.minimartapi.admin.role.Role;
-import com.springboot.minimartapi.admin.role.RoleEditionDto;
-import com.springboot.minimartapi.admin.role.RoleMapper;
+import com.springboot.minimartapi.role.RoleMapper;
+import com.springboot.minimartapi.auth.dto.AuthDto;
+import com.springboot.minimartapi.auth.dto.LoginDto;
+import com.springboot.minimartapi.auth.dto.UserRegistrationDto;
+import com.springboot.minimartapi.auth.dto.VerifyUserDto;
 import com.springboot.minimartapi.user.User;
 
 import com.springboot.minimartapi.user.UserRepo;

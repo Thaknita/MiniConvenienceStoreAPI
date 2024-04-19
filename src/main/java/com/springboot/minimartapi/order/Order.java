@@ -26,11 +26,11 @@ public class Order {
     private String orderStatus;
     private LocalDateTime orderDate;
     private LocalDateTime receivedDate;
-    @ManyToMany
-    @JoinTable(name = "orders_products",
-            joinColumns = @JoinColumn(name = "order_number"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+
+    @OneToMany (mappedBy = "orderNumber")
+    List<OrdersProducts> ordersProducts;
+
+
+
 
 }

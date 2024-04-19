@@ -1,6 +1,5 @@
 package com.springboot.minimartapi.user;
 
-import com.springboot.minimartapi.admin.role.Role;
 import com.springboot.minimartapi.user.payment.PaymentInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

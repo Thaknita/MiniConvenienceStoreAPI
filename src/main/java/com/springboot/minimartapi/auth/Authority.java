@@ -1,6 +1,6 @@
 package com.springboot.minimartapi.auth;
 
-import com.springboot.minimartapi.admin.role.Role;
+import com.springboot.minimartapi.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

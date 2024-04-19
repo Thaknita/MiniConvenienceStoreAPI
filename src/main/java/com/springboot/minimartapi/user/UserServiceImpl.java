@@ -1,19 +1,24 @@
 package com.springboot.minimartapi.user;
 
 
-import com.springboot.minimartapi.admin.role.Role;
-import com.springboot.minimartapi.admin.role.RoleDto;
-import com.springboot.minimartapi.admin.role.RoleMapper;
+import com.springboot.minimartapi.role.Role;
+import com.springboot.minimartapi.role.RoleDto;
+import com.springboot.minimartapi.role.RoleMapper;
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.order.OrderDto;
 import com.springboot.minimartapi.order.OrderMapper;
 import com.springboot.minimartapi.order.OrderRepo;
 import com.springboot.minimartapi.product.*;
-import com.springboot.minimartapi.user.address.AddressCreationDto;
-import com.springboot.minimartapi.user.address.AddressEditionDto;
+import com.springboot.minimartapi.product.dto.ProductInCartDto;
+import com.springboot.minimartapi.product.dto.ProductToRemoveFromCartDto;
+import com.springboot.minimartapi.user.address.dto.AddressCreationDto;
+import com.springboot.minimartapi.user.address.dto.AddressEditionDto;
 
 import com.springboot.minimartapi.user.carts.*;
 import com.springboot.minimartapi.user.payment.*;
+import com.springboot.minimartapi.user.payment.dto.PaymentCreationDto;
+import com.springboot.minimartapi.user.payment.dto.PaymentEditionDto;
+import com.springboot.minimartapi.user.payment.dto.PaymentInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -217,7 +222,7 @@ public class UserServiceImpl implements UserService{
                 }
         );
         Order order = orderMapper.toOrder(orderDto);
-
+        order.setIsDelivered(false);
         orderRepo.save(order);
 
         cartItemRepo.cleanCart(cart);

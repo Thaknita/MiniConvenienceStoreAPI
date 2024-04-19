@@ -1,14 +1,12 @@
 package com.springboot.minimartapi.admin;
 
-import com.springboot.minimartapi.admin.role.Role;
-import com.springboot.minimartapi.admin.role.RoleCreationDto;
-import com.springboot.minimartapi.admin.role.RoleEditionDto;
-import com.springboot.minimartapi.admin.role.RoleService;
-import com.springboot.minimartapi.product.CategoryCreationDto;
-import com.springboot.minimartapi.product.ProductCreationDto;
-import com.springboot.minimartapi.product.ProductEditionDto;
+import com.springboot.minimartapi.role.RoleCreationDto;
+import com.springboot.minimartapi.role.RoleEditionDto;
+import com.springboot.minimartapi.role.RoleService;
+import com.springboot.minimartapi.product.category.CategoryCreationDto;
+import com.springboot.minimartapi.product.dto.ProductCreationDto;
+import com.springboot.minimartapi.product.dto.ProductEditionDto;
 import com.springboot.minimartapi.product.ProductService;
-import com.springboot.minimartapi.user.UserRepo;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

@@ -1,5 +1,10 @@
 package com.springboot.minimartapi.product;
 
+import com.springboot.minimartapi.product.category.CategoryCreationDto;
+import com.springboot.minimartapi.product.dto.ProductCreationDto;
+import com.springboot.minimartapi.product.dto.ProductDto;
+import com.springboot.minimartapi.product.dto.ProductEditionDto;
+
 import java.util.List;
 
 public interface ProductService {

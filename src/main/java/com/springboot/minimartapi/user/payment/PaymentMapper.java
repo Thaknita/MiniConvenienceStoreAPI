@@ -3,6 +3,9 @@
 package com.springboot.minimartapi.user.payment;
 
 
+import com.springboot.minimartapi.user.payment.dto.PaymentCreationDto;
+import com.springboot.minimartapi.user.payment.dto.PaymentEditionDto;
+import com.springboot.minimartapi.user.payment.dto.PaymentInfoDto;
 import org.mapstruct.*;
 
 import java.util.Set;

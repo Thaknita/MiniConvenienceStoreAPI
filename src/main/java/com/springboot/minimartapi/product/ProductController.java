@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.product;
 
+import com.springboot.minimartapi.product.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

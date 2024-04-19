@@ -1,6 +1,8 @@
 package com.springboot.minimartapi.product;
 
 import com.springboot.minimartapi.order.Order;
+import com.springboot.minimartapi.order.OrdersProducts;
+import com.springboot.minimartapi.product.category.Category;
 import com.springboot.minimartapi.transaction.Transaction;
 import com.springboot.minimartapi.user.carts.CartItem;
 import jakarta.persistence.*;
@@ -33,14 +35,14 @@ public class Product {
     private Double price;
     private Long qtyOnHand;
 
-   @ManyToMany (mappedBy = "products")
-    private List<Order> orders;
-
    @OneToMany (mappedBy = "productId")
    private List<Transaction> transactions;
 
    @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
+
+   @OneToMany(mappedBy = "product")
+    private List<OrdersProducts> ordersProducts;
 
 
 }

@@ -1,7 +1,6 @@
 package com.springboot.minimartapi.order;
 
-import com.springboot.minimartapi.product.ProductDto;
-import com.springboot.minimartapi.product.ProductInCartDto;
+import com.springboot.minimartapi.product.dto.ProductInCartDto;
 import com.springboot.minimartapi.user.UserDto;
 import lombok.Builder;
 

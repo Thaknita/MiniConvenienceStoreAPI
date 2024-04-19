@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.product;
 
+import com.springboot.minimartapi.product.dto.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
@@ -10,7 +11,7 @@ public interface ProductMapper {
 List<ProductDto> toProductDto (List<Product> products);
 Product fromProductCreationDto (ProductCreationDto productCreationDto);
 
-void fromProductEditionDto ( ProductEditionDto productEditionDto,@MappingTarget Product product);
+void fromProductEditionDto (ProductEditionDto productEditionDto, @MappingTarget Product product);
 
 
 Product fromProductToAddDto(ProductToAddDto product);

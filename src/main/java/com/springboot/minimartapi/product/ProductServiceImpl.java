@@ -1,4 +1,11 @@
 package com.springboot.minimartapi.product;
+import com.springboot.minimartapi.product.category.Category;
+import com.springboot.minimartapi.product.category.CategoryCreationDto;
+import com.springboot.minimartapi.product.category.CategoryMapper;
+import com.springboot.minimartapi.product.category.CategoryRepo;
+import com.springboot.minimartapi.product.dto.ProductCreationDto;
+import com.springboot.minimartapi.product.dto.ProductDto;
+import com.springboot.minimartapi.product.dto.ProductEditionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
