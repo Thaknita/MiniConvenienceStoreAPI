@@ -1,7 +1,7 @@
 package com.springboot.minimartapi.product;
 
 import com.springboot.minimartapi.order.Order;
-import com.springboot.minimartapi.order.OrdersProducts;
+import com.springboot.minimartapi.order.OrderItem;
 import com.springboot.minimartapi.product.category.Category;
 import com.springboot.minimartapi.transaction.Transaction;
 import com.springboot.minimartapi.user.carts.CartItem;
@@ -41,8 +41,8 @@ public class Product {
    @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
 
-   @OneToMany(mappedBy = "product")
-    private List<OrdersProducts> ordersProducts;
+   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+   private List<OrderItem> orderItems;
 
 
 }

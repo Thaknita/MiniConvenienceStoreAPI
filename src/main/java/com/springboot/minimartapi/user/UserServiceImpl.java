@@ -1,19 +1,16 @@
 package com.springboot.minimartapi.user;
-
-
+import com.springboot.minimartapi.order.*;
+import com.springboot.minimartapi.order.dto.ItemDto;
+import com.springboot.minimartapi.order.dto.OrderDto;
+import com.springboot.minimartapi.order.dto.OrderItemDto;
 import com.springboot.minimartapi.role.Role;
 import com.springboot.minimartapi.role.RoleDto;
 import com.springboot.minimartapi.role.RoleMapper;
-import com.springboot.minimartapi.order.Order;
-import com.springboot.minimartapi.order.OrderDto;
-import com.springboot.minimartapi.order.OrderMapper;
-import com.springboot.minimartapi.order.OrderRepo;
 import com.springboot.minimartapi.product.*;
 import com.springboot.minimartapi.product.dto.ProductInCartDto;
 import com.springboot.minimartapi.product.dto.ProductToRemoveFromCartDto;
 import com.springboot.minimartapi.user.address.dto.AddressCreationDto;
 import com.springboot.minimartapi.user.address.dto.AddressEditionDto;
-
 import com.springboot.minimartapi.user.carts.*;
 import com.springboot.minimartapi.user.payment.*;
 import com.springboot.minimartapi.user.payment.dto.PaymentCreationDto;
@@ -26,10 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.time.LocalDateTime;
 import java.util.*;
-
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +44,8 @@ public class UserServiceImpl implements UserService{
     private final OrderMapper orderMapper;
     private final OrderRepo orderRepo;
     private final RoleMapper roleMapper;
+    private final OrderItemRepo orderItemRepo;
+
     @Override
     public void createUser(UserCreationDto userCreationDto) {
 
@@ -167,9 +164,11 @@ public class UserServiceImpl implements UserService{
         products.forEach(
                 cartItem -> productInCartDtoList.add(
                            ProductInCartDto.builder()
-                                   .productId(cartItem.getProductId())
-                                   .productName(cartItemRepo.productName(cartItem))
-                                   .price(cartItemRepo.price(cartItem))
+                                   .product(ItemDto.builder()
+                                           .productId(cartItem.getProductId())
+                                           .productName(cartItemRepo.productName(cartItem))
+                                           .price(cartItemRepo.price(cartItem))
+                                           .build())
                                    .qty(cartItemRepo.qty(cartItem))
                                    .build())
         );
@@ -199,37 +198,47 @@ public class UserServiceImpl implements UserService{
 
         List<ProductInCartDto> productInCartDtoList = this.listProductInCart(UserDto.builder().userId(userId).build());
 
+        List<OrderItemDto> orderItemDtoList = orderMapper.toOrderItemDtoList(productInCartDtoList);
+
         OrderDto orderDto = OrderDto.builder()
                .orderStatus("await to confirm")
                .orderDate(LocalDateTime.now())
                .userId(UserDto.builder().userId(userId).build())
-               .productList(productInCartDtoList)
+               .orderItemDtoList(orderItemDtoList)
                .totalPrice(cartItemRepo.totalPrice(cart))
                .vat((cartItemRepo.totalPrice(cart) * 0.1 ))
                .grandTotal((cartItemRepo.totalPrice(cart)+(cartItemRepo.totalPrice(cart) * 0.1 )  ))
                .build();
 
-        orderDto.productList().forEach(
+        orderDto.orderItemDtoList().forEach(
                 product -> {
-                   if ( product.qty() > productRepo.qtyOnHand(product.productId()) ){
-                       System.out.println(product.productId()+ "productId");
+                   if ( product.qty() > productRepo.qtyOnHand(product.product().productId()) ){
+                       System.out.println(product.product().productId()+ "productId");
                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product out of stock");
                    }
                    else{
-                        Long newQty = productRepo.qtyOnHand(product.productId()) - product.qty();
-                        productRepo.updateQty(product.productId(), newQty );
+                        Long newQty = productRepo.qtyOnHand(product.product().productId()) - product.qty();
+                        productRepo.updateQty(product.product().productId(), newQty );
                    }
                 }
         );
+        List<OrderItem> orderItems =  orderMapper.fromOrderItemDto(orderItemDtoList);
         Order order = orderMapper.toOrder(orderDto);
         order.setIsDelivered(false);
         orderRepo.save(order);
+        orderItems.forEach(
+                orderItem1 -> {
 
+                    OrderItem orderItem = new OrderItem();
+                    orderItem.setOrder(order);
+                    orderItem.setProduct(orderItem1.getProduct());
+                    orderItem.setQty(orderItem1.getQty());
+                    orderItemRepo.save(orderItem);
+                }
+        );
         cartItemRepo.cleanCart(cart);
-
-        return Map.of("Order placed await to confirm", orderDto  );
+        return Map.of("Order placed await to confirm", orderDto, "Order Reference: ", order.getOrderNumber() );
 
     }
 
 }
-

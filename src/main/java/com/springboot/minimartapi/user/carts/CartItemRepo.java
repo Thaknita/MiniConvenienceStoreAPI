@@ -35,7 +35,7 @@ public interface CartItemRepo extends JpaRepository<CartItem, Long> {
     @Query("""
     SELECT DISTINCT c.product.price from CartItem  as c WHERE c.product =?1
     """)
-    Float price(Product product);
+    Double price(Product product);
     @Modifying
     void deleteCartItemsByProductAndReference(Product product, Cart cart);
     @Modifying

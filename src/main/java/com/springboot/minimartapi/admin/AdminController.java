@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.admin;
 
+import com.springboot.minimartapi.order.dto.AwaitToConfirmDto;
 import com.springboot.minimartapi.role.RoleCreationDto;
 import com.springboot.minimartapi.role.RoleEditionDto;
 import com.springboot.minimartapi.role.RoleService;
@@ -10,6 +11,8 @@ import com.springboot.minimartapi.product.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,6 +62,10 @@ public class AdminController {
       productService.createCategory(categoryCreationDto);
     }
 
+    @GetMapping("orders/toconfirm")
+    List<AwaitToConfirmDto> listOrderToConfirm(){
+    return adminService.listOrderToConfirm();
+    }
 
 
 

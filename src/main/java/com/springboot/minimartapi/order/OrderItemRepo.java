@@ -4,7 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface OrderRepo extends JpaRepository<Order, Long> {
-List<Order> findAllByOrderStatus(String oderStatus);
+public interface OrderItemRepo extends JpaRepository<OrderItem, Long> {
+List<OrderItem> findOrderItemsByOrder(Order order);
+
 
 }
