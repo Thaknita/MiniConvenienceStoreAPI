@@ -107,19 +107,13 @@ public class AdminController {
   Map<String, Object> completeOrder(@PathVariable Long orderNumber){
     return  adminService.orderConfirmReceived(orderNumber);
   }
-
   @PostMapping("transactions/bookin")
   void bookProduct(@Valid @RequestBody TransactionCreationDto transactionCreationDto){
     adminService.bookProductInToStock(transactionCreationDto);
   }
-
   @GetMapping("/transactions")
   List<TransactionDto> transactionDtoList(){
     return adminService.transactionDtoList();
   }
-
-
-
-
 
 }
