@@ -85,6 +85,10 @@ public class AdminController {
     return adminService.getDeliveryAddress(orderNumber);
   }
 
+  @PostMapping("orders/deliver/{orderNumber}")
+  Map<String, Object> deliver(@PathVariable Long orderNumber){
+    return adminService.deliver(orderNumber);
+  }
 
 
 

@@ -19,5 +19,7 @@ public interface AdminService {
 
     String getDeliveryAddress(Long orderNumber);
 
+    Map<String, Object> deliver(Long orderNumber);
+
 
 }

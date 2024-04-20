@@ -60,5 +60,12 @@ public class AdminServiceImpl implements AdminService{
         return userRepo.getAddress(user.getUserId());
     }
 
+    @Transactional
+    @Override
+    public Map<String, Object> deliver(Long orderNumber) {
+        orderRepo.deliver(orderNumber);
+        return Map.of("order is on the way", orderNumber);
+    }
+
 
 }
