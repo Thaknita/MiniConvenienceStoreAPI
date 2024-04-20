@@ -16,10 +16,9 @@ public interface AdminService {
     Map<String , Object> confirmOrder(Long orderNumber);
     List<AdminOrderDto> listOrderToDeliver();
     List<OrderItemDto> listOrderItemByOrderNumber(Long orderNumber);
-
     String getDeliveryAddress(Long orderNumber);
-
     Map<String, Object> deliver(Long orderNumber);
+    List<AdminOrderDto> listDeliveringOrder();
 
 
 }

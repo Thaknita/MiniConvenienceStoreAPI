@@ -89,6 +89,11 @@ public class AdminController {
   Map<String, Object> deliver(@PathVariable Long orderNumber){
     return adminService.deliver(orderNumber);
   }
+  @GetMapping("orders/delivering")
+  List<AdminOrderDto> deliveringOrders(){
+    return adminService.listDeliveringOrder();
+  }
+
 
 
 

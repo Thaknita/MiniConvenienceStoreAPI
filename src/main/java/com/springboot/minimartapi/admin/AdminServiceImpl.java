@@ -67,5 +67,11 @@ public class AdminServiceImpl implements AdminService{
         return Map.of("order is on the way", orderNumber);
     }
 
+    @Override
+    public List<AdminOrderDto> listDeliveringOrder() {
+        List<Order> orders = orderRepo.findAllByOrderStatus("delivering");
+        return orderMapper.toAwaitToConfirmDtoList(orders);
+    }
+
 
 }
