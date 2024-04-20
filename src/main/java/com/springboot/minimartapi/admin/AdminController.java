@@ -1,6 +1,7 @@
 package com.springboot.minimartapi.admin;
 
 import com.springboot.minimartapi.order.dto.AdminOrderDto;
+import com.springboot.minimartapi.order.dto.OrderItemDto;
 import com.springboot.minimartapi.role.RoleCreationDto;
 import com.springboot.minimartapi.role.RoleEditionDto;
 import com.springboot.minimartapi.role.RoleService;
@@ -73,6 +74,10 @@ public class AdminController {
   @GetMapping("orders/todeliver")
   List<AdminOrderDto> listOrderToDeliver(){
     return adminService.listOrderToDeliver();
+  }
+  @GetMapping("orders/listitemtodeliver/{orderNumber}")
+  List<OrderItemDto> listOderItem(@PathVariable Long orderNumber){
+    return adminService.listOrderItemByOrderNumber(orderNumber);
   }
 
 

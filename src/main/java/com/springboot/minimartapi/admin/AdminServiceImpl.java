@@ -1,8 +1,8 @@
 package com.springboot.minimartapi.admin;
-import com.springboot.minimartapi.order.OrderItemRepo;
-import com.springboot.minimartapi.order.OrderMapper;
-import com.springboot.minimartapi.order.OrderRepo;
+import com.springboot.minimartapi.order.*;
 import com.springboot.minimartapi.order.dto.AdminOrderDto;
+import com.springboot.minimartapi.order.dto.OrderDto;
+import com.springboot.minimartapi.order.dto.OrderItemDto;
 import com.springboot.minimartapi.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,6 +46,12 @@ public class AdminServiceImpl implements AdminService{
         return orderMapper.toAwaitToConfirmDtoList(orderRepo.findAllByOrderStatus("await to deliver"));
     }
 
+    @Override
+    public List<OrderItemDto> listOrderItemByOrderNumber(Long orderNumber) {
+        Order order = orderMapper.toOrder(OrderDto.builder().orderNumber(orderNumber).build());
+         List<OrderItem> orderItems = orderItemRepo.findOrderItemsByOrder(order);
+         return orderMapper.fromOrderItemList(orderItems);
+    }
 
 
 }

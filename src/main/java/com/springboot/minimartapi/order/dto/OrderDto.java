@@ -8,6 +8,7 @@ import java.util.List;
 
 @Builder
 public record OrderDto(
+        Long orderNumber,
         Double totalPrice,
         Double vat,
         Double grandTotal,

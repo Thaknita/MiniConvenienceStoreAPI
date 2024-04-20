@@ -228,7 +228,6 @@ public class UserServiceImpl implements UserService{
         orderRepo.save(order);
         orderItems.forEach(
                 orderItem1 -> {
-
                     OrderItem orderItem = new OrderItem();
                     orderItem.setOrder(order);
                     orderItem.setProduct(orderItem1.getProduct());

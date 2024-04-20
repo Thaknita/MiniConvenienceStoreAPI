@@ -15,6 +15,8 @@ public interface OrderMapper {
     List<OrderItem> fromOrderItemDto(List<OrderItemDto> orderItemDtoList);
     List<AdminOrderDto> toAwaitToConfirmDtoList(List<Order> orders);
 
+    List<OrderItemDto> fromOrderItemList (List<OrderItem> orderItems);
+
 
 
 }

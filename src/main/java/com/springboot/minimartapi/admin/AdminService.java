@@ -1,6 +1,8 @@
 package com.springboot.minimartapi.admin;
 
+import com.springboot.minimartapi.order.OrderItem;
 import com.springboot.minimartapi.order.dto.AdminOrderDto;
+import com.springboot.minimartapi.order.dto.OrderItemDto;
 
 
 import java.util.List;
@@ -13,6 +15,7 @@ public interface AdminService {
     List<AdminOrderDto> listOrderToConfirm();
     Map<String , Object> confirmOrder(Long orderNumber);
     List<AdminOrderDto> listOrderToDeliver();
+    List<OrderItemDto> listOrderItemByOrderNumber(Long orderNumber);
 
 
 }
