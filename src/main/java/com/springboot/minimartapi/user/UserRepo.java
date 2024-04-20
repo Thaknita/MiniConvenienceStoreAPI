@@ -36,5 +36,11 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
      void deleteByUserId(Long userId);
 
+     @Query("""
+     SELECT u.deliveryAddress FROM User as u
+     WHERE u.userId = ?1
+     """)
+     String getAddress(Long userId);
+
 
 }

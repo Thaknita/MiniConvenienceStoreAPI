@@ -17,5 +17,7 @@ public interface AdminService {
     List<AdminOrderDto> listOrderToDeliver();
     List<OrderItemDto> listOrderItemByOrderNumber(Long orderNumber);
 
+    String getDeliveryAddress(Long orderNumber);
+
 
 }

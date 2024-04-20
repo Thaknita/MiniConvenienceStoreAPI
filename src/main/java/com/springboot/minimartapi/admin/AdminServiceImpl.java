@@ -3,6 +3,7 @@ import com.springboot.minimartapi.order.*;
 import com.springboot.minimartapi.order.dto.AdminOrderDto;
 import com.springboot.minimartapi.order.dto.OrderDto;
 import com.springboot.minimartapi.order.dto.OrderItemDto;
+import com.springboot.minimartapi.user.User;
 import com.springboot.minimartapi.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,12 @@ public class AdminServiceImpl implements AdminService{
         Order order = orderMapper.toOrder(OrderDto.builder().orderNumber(orderNumber).build());
          List<OrderItem> orderItems = orderItemRepo.findOrderItemsByOrder(order);
          return orderMapper.fromOrderItemList(orderItems);
+    }
+
+    @Override
+    public String getDeliveryAddress(Long orderNumber) {
+        User user = orderRepo.getUser(orderNumber);
+        return userRepo.getAddress(user.getUserId());
     }
 
 

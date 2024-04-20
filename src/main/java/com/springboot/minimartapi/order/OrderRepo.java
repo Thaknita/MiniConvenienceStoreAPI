@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.order;
 
+import com.springboot.minimartapi.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,6 +16,12 @@ List<Order> findAllByOrderStatus(String oderStatus);
     WHERE o.orderNumber =?1
 """)
 void confirmOrder(Long orderNumber);
+
+@Query("""
+    SELECT o.userId from Order as o
+    WHERE o.orderNumber =?1
+""")
+User getUser(Long orderNumber);
 
 
 

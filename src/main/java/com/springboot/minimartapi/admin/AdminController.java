@@ -80,6 +80,12 @@ public class AdminController {
     return adminService.listOrderItemByOrderNumber(orderNumber);
   }
 
+  @GetMapping("orders/address/{orderNumber}")
+  String deliveryAddress(@PathVariable Long orderNumber ){
+    return adminService.getDeliveryAddress(orderNumber);
+  }
+
+
 
 
 
