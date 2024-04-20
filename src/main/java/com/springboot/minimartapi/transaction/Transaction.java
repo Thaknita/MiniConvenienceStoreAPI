@@ -18,15 +18,12 @@ public class Transaction {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long transactionId;
-
     @ManyToOne
+
     @JoinColumn(name = "product_id", referencedColumnName = "productId")
     private Product productId;
-
     private String transactionType;
     private Long productQty;
     private LocalDateTime transactionDate;
-    private LocalDateTime productExpDate;
-
 
 }

@@ -14,9 +14,8 @@ public record ProductCreationDto(
     @NotNull
     CategoryDto category,
     @NotNull
-    Double price,
-    @NotNull
-    Long qtyOnHand
+    Double price
+
 
 ) {
 }

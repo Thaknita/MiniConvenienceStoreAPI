@@ -1,5 +1,6 @@
 package com.springboot.minimartapi.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.order.OrderItem;
 import com.springboot.minimartapi.product.category.Category;
@@ -19,7 +20,6 @@ import java.util.List;
 @Entity
 @Table(name = "products")
 public class Product {
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long productId;

@@ -1,14 +1,17 @@
 package com.springboot.minimartapi.user;
+import com.springboot.minimartapi.admin.AdminService;
 import com.springboot.minimartapi.order.*;
 import com.springboot.minimartapi.order.dto.ItemDto;
 import com.springboot.minimartapi.order.dto.OrderDto;
 import com.springboot.minimartapi.order.dto.OrderItemDto;
+import com.springboot.minimartapi.product.dto.ProductIdDto;
 import com.springboot.minimartapi.role.Role;
 import com.springboot.minimartapi.role.RoleDto;
 import com.springboot.minimartapi.role.RoleMapper;
 import com.springboot.minimartapi.product.*;
 import com.springboot.minimartapi.product.dto.ProductInCartDto;
 import com.springboot.minimartapi.product.dto.ProductToRemoveFromCartDto;
+import com.springboot.minimartapi.transaction.TransactionCreationDto;
 import com.springboot.minimartapi.user.address.dto.AddressCreationDto;
 import com.springboot.minimartapi.user.address.dto.AddressEditionDto;
 import com.springboot.minimartapi.user.carts.*;
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService{
     private final OrderRepo orderRepo;
     private final RoleMapper roleMapper;
     private final OrderItemRepo orderItemRepo;
+    private final AdminService adminService;
 
     @Override
     public void createUser(UserCreationDto userCreationDto) {
@@ -169,7 +173,7 @@ public class UserServiceImpl implements UserService{
                                            .productName(cartItemRepo.productName(cartItem))
                                            .price(cartItemRepo.price(cartItem))
                                            .build())
-                                   .qty(cartItemRepo.qty(cartItem))
+                                   .qty(cartItemRepo.qty(cartItem, cart))
                                    .build())
         );
         return productInCartDtoList;
@@ -217,8 +221,11 @@ public class UserServiceImpl implements UserService{
                        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "product out of stock");
                    }
                    else{
-                        Long newQty = productRepo.qtyOnHand(product.product().productId()) - product.qty();
-                        productRepo.updateQty(product.product().productId(), newQty );
+                       TransactionCreationDto transactionCreationDto = TransactionCreationDto.builder()
+                               .productQty(-product.qty())
+                               .productId(ProductIdDto.builder().productId(product.product().productId()).build())
+                               .build();
+                       adminService.cutProductFromStock(transactionCreationDto);
                    }
                 }
         );
@@ -236,7 +243,7 @@ public class UserServiceImpl implements UserService{
                 }
         );
         cartItemRepo.cleanCart(cart);
-        return Map.of("Order placed await to confirm", orderDto, "Order Reference: ", order.getOrderNumber() );
+        return Map.of( "Order Reference: ", order.getOrderNumber(), "Order placed await to confirm", orderDto);
 
     }
 

@@ -2,6 +2,7 @@ package com.springboot.minimartapi.admin;
 
 import com.springboot.minimartapi.order.dto.AdminOrderDto;
 import com.springboot.minimartapi.order.dto.OrderItemDto;
+import com.springboot.minimartapi.product.ProductRepo;
 import com.springboot.minimartapi.role.RoleCreationDto;
 import com.springboot.minimartapi.role.RoleEditionDto;
 import com.springboot.minimartapi.role.RoleService;
@@ -9,6 +10,8 @@ import com.springboot.minimartapi.product.category.CategoryCreationDto;
 import com.springboot.minimartapi.product.dto.ProductCreationDto;
 import com.springboot.minimartapi.product.dto.ProductEditionDto;
 import com.springboot.minimartapi.product.ProductService;
+import com.springboot.minimartapi.transaction.TransactionCreationDto;
+import com.springboot.minimartapi.transaction.TransactionDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +26,7 @@ public class AdminController {
   private final ProductService productService;
   private final RoleService roleService;
   private final AdminService adminService;
+
 
   @PostMapping("/roles/create")
   void createRole(@Valid @RequestBody RoleCreationDto roleCreationDto){
@@ -57,6 +61,11 @@ public class AdminController {
   void deleteProduct(@PathVariable Long productId){
       productService.deleteProduct(productId);
     }
+
+  @GetMapping("/products/checkqty/{productId}")
+  Long checkStock(@PathVariable Long productId){
+    return adminService.checkQtyOnHandOfProductId(productId);
+  }
   @PostMapping("/categories/create")
    void  createCategory(@Valid @RequestBody CategoryCreationDto categoryCreationDto)  {
       productService.createCategory(categoryCreationDto);
@@ -99,21 +108,15 @@ public class AdminController {
     return  adminService.orderConfirmReceived(orderNumber);
   }
 
+  @PostMapping("transactions/bookin")
+  void bookProduct(@Valid @RequestBody TransactionCreationDto transactionCreationDto){
+    adminService.bookProductInToStock(transactionCreationDto);
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  @GetMapping("/transactions")
+  List<TransactionDto> transactionDtoList(){
+    return adminService.transactionDtoList();
+  }
 
 
 

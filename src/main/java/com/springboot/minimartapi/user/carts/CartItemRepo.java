@@ -17,9 +17,9 @@ public interface CartItemRepo extends JpaRepository<CartItem, Long> {
     @Query("""
     SELECT SUM(c.qty) AS total_qty
     FROM CartItem c
-    WHERE c.product = ?1
+    WHERE c.product = ?1 AND c.reference = ?2
     """)
-    Long qty(Product product);
+    Long qty(Product product, Cart cart);
 
     @Query("""
     SELECT SUM(c.product.price) AS total_price

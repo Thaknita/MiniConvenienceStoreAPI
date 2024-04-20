@@ -11,17 +11,9 @@ import java.util.List;
 public interface ProductMapper {
 List<ProductDto> toProductDto (List<Product> products);
 Product fromProductCreationDto (ProductCreationDto productCreationDto);
-
-void fromProductEditionDto (ProductEditionDto productEditionDto, @MappingTarget Product product);
-
-Product fromItemDto(ItemDto itemDto);
-Product fromProductToAddDto(ProductToAddDto product);
-
-List<ProductDto> toProductDtoList(List<Product> products);
-
 Product toProduct(ProductToRemoveFromCartDto product);
 
-List<Product> fromProductInCartDto(List<ProductInCartDto> listProductInCartDto);
+
 
 
 

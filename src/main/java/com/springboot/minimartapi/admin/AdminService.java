@@ -3,6 +3,8 @@ package com.springboot.minimartapi.admin;
 import com.springboot.minimartapi.order.OrderItem;
 import com.springboot.minimartapi.order.dto.AdminOrderDto;
 import com.springboot.minimartapi.order.dto.OrderItemDto;
+import com.springboot.minimartapi.transaction.TransactionCreationDto;
+import com.springboot.minimartapi.transaction.TransactionDto;
 
 
 import java.util.List;
@@ -21,6 +23,14 @@ public interface AdminService {
     List<AdminOrderDto> listDeliveringOrder();
 
     Map<String, Object> orderConfirmReceived(Long orderNumber);
+
+    void bookProductInToStock(TransactionCreationDto transactionCreationDto);
+
+    void cutProductFromStock(TransactionCreationDto transactionCreationDto);
+
+    List<TransactionDto> transactionDtoList();
+
+    Long checkQtyOnHandOfProductId(Long productId);
 
 
 }
