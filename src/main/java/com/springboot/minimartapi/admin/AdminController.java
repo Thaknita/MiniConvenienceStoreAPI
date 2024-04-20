@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,26 +47,31 @@ public class AdminController {
   void  creatProduct(@Valid @RequestBody ProductCreationDto productCreationDto){
       productService.createProduct(productCreationDto);
   }
-
-    @PatchMapping("/products/edit/{productId}")
-    void  editProduct( @RequestBody ProductEditionDto productEditionDto, @PathVariable Long productId){
+  @PatchMapping("/products/edit/{productId}")
+  void  editProduct( @RequestBody ProductEditionDto productEditionDto, @PathVariable Long productId){
       productService.editProduct(productEditionDto, productId);
-    }
+  }
 
-    @DeleteMapping("/products/delete/{productId}")
-    void deleteProduct(@PathVariable Long productId){
+  @DeleteMapping("/products/delete/{productId}")
+  void deleteProduct(@PathVariable Long productId){
       productService.deleteProduct(productId);
     }
-
-    @PostMapping("/categories/create")
-    void  createCategory(@Valid @RequestBody CategoryCreationDto categoryCreationDto)  {
+  @PostMapping("/categories/create")
+   void  createCategory(@Valid @RequestBody CategoryCreationDto categoryCreationDto)  {
       productService.createCategory(categoryCreationDto);
-    }
-
-    @GetMapping("orders/toconfirm")
+  }
+  @GetMapping("orders/toconfirm")
     List<AwaitToConfirmDto> listOrderToConfirm(){
     return adminService.listOrderToConfirm();
-    }
+  }
+
+  @PostMapping("orders/confirm/{orderNumber}")
+  Map<String, Object> confirmOrder(@PathVariable Long orderNumber){
+    return adminService.confirmOrder(orderNumber);
+  }
+
+
+
 
 
 

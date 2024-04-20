@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,14 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     public List<AwaitToConfirmDto> listOrderToConfirm() {
-
         return orderMapper.toAwaitToConfirmDtoList(orderRepo.findAllByOrderStatus("await to confirm"));
     }
+    @Transactional
+    @Override
+    public Map<String, Object> confirmOrder(Long orderNumber) {
+        orderRepo.confirmOrder(orderNumber);
+        return Map.of("Order confirmed","await to deliver");
+    }
+
+
 }
