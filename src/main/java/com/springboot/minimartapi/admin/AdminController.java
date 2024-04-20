@@ -94,6 +94,12 @@ public class AdminController {
     return adminService.listDeliveringOrder();
   }
 
+  @PostMapping("orders/complete/{orderNumber}")
+  Map<String, Object> completeOrder(@PathVariable Long orderNumber){
+    return  adminService.orderConfirmReceived(orderNumber);
+  }
+
+
 
 
 

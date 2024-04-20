@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -71,6 +73,16 @@ public class AdminServiceImpl implements AdminService{
     public List<AdminOrderDto> listDeliveringOrder() {
         List<Order> orders = orderRepo.findAllByOrderStatus("delivering");
         return orderMapper.toAwaitToConfirmDtoList(orders);
+    }
+    @Transactional
+    @Override
+    public Map<String, Object> orderConfirmReceived(Long orderNumber) {
+
+        orderRepo.delivered(orderNumber);
+        orderRepo.setDeliveredToTrue(orderNumber);
+        orderRepo.updateReceiveDate(orderNumber, LocalDateTime.now());
+
+        return Map.of("order Completed", orderNumber);
     }
 
 

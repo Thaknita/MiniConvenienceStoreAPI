@@ -20,5 +20,7 @@ public interface AdminService {
     Map<String, Object> deliver(Long orderNumber);
     List<AdminOrderDto> listDeliveringOrder();
 
+    Map<String, Object> orderConfirmReceived(Long orderNumber);
+
 
 }
