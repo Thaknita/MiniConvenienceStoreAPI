@@ -1,9 +1,8 @@
 package com.springboot.minimartapi.admin;
-import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.order.OrderItemRepo;
 import com.springboot.minimartapi.order.OrderMapper;
 import com.springboot.minimartapi.order.OrderRepo;
-import com.springboot.minimartapi.order.dto.AwaitToConfirmDto;
+import com.springboot.minimartapi.order.dto.AdminOrderDto;
 import com.springboot.minimartapi.user.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<AwaitToConfirmDto> listOrderToConfirm() {
+    public List<AdminOrderDto> listOrderToConfirm() {
         return orderMapper.toAwaitToConfirmDtoList(orderRepo.findAllByOrderStatus("await to confirm"));
     }
     @Transactional
@@ -41,6 +40,12 @@ public class AdminServiceImpl implements AdminService{
         orderRepo.confirmOrder(orderNumber);
         return Map.of("Order confirmed","await to deliver");
     }
+
+    @Override
+    public List<AdminOrderDto> listOrderToDeliver() {
+        return orderMapper.toAwaitToConfirmDtoList(orderRepo.findAllByOrderStatus("await to deliver"));
+    }
+
 
 
 }

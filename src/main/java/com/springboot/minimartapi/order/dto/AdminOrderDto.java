@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 
 @Builder
-public record AwaitToConfirmDto(
+public record AdminOrderDto(
         Double totalPrice,
         Double vat,
         Double grandTotal,

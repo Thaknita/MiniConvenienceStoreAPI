@@ -1,6 +1,6 @@
 package com.springboot.minimartapi.admin;
 
-import com.springboot.minimartapi.order.dto.AwaitToConfirmDto;
+import com.springboot.minimartapi.order.dto.AdminOrderDto;
 
 
 import java.util.List;
@@ -10,7 +10,9 @@ public interface AdminService {
 
     void deactivateUser(Long userId);
     void deleteUser(Long userId);
-    List<AwaitToConfirmDto> listOrderToConfirm();
+    List<AdminOrderDto> listOrderToConfirm();
     Map<String , Object> confirmOrder(Long orderNumber);
+    List<AdminOrderDto> listOrderToDeliver();
+
 
 }

@@ -1,6 +1,6 @@
 package com.springboot.minimartapi.admin;
 
-import com.springboot.minimartapi.order.dto.AwaitToConfirmDto;
+import com.springboot.minimartapi.order.dto.AdminOrderDto;
 import com.springboot.minimartapi.role.RoleCreationDto;
 import com.springboot.minimartapi.role.RoleEditionDto;
 import com.springboot.minimartapi.role.RoleService;
@@ -61,13 +61,18 @@ public class AdminController {
       productService.createCategory(categoryCreationDto);
   }
   @GetMapping("orders/toconfirm")
-    List<AwaitToConfirmDto> listOrderToConfirm(){
+    List<AdminOrderDto> listOrderToConfirm(){
     return adminService.listOrderToConfirm();
   }
 
   @PostMapping("orders/confirm/{orderNumber}")
   Map<String, Object> confirmOrder(@PathVariable Long orderNumber){
     return adminService.confirmOrder(orderNumber);
+  }
+
+  @GetMapping("orders/todeliver")
+  List<AdminOrderDto> listOrderToDeliver(){
+    return adminService.listOrderToDeliver();
   }
 
 
