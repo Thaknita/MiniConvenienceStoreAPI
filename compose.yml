@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mini-mart-api:
+    container_name: 'mini-mart-api'
+    image: 'minimartapi:1.0'
+    build:
+      context: .
+    ports:
+      - '15600:8080'
+    depends_on:
+      - mini-mart-api-db
+  mini-mart-api-db:
+    container_name: 'mini-mart-db'
+    image: 'postgres:15'
+    environment:
+      - TZ=Asia/Bangkok
+      - POSTGRES_USER=minimart
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=minimartapi
+    ports:
+      - '5441:5432'
