@@ -4,6 +4,9 @@ import com.springboot.minimartapi.product.category.CategoryDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Builder
 public record ProductCreationDto(
@@ -15,7 +18,6 @@ public record ProductCreationDto(
     CategoryDto category,
     @NotNull
     Double price
-
 
 ) {
 }

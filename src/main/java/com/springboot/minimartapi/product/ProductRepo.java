@@ -32,7 +32,13 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
         WHERE p.productId =?1
     """)
     void updateQty(Long productId, Long newQty);
-
+    @Modifying
+    @Query("""
+    UPDATE Product as p
+    SET p.imgUri = ?2
+    WHERE p.productId=?1
+    """)
+    void addImg(Long productId, String file);
 
 
 

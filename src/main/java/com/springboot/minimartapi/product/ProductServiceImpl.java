@@ -1,4 +1,5 @@
 package com.springboot.minimartapi.product;
+import com.springboot.minimartapi.files.FileUploadService;
 import com.springboot.minimartapi.product.category.Category;
 import com.springboot.minimartapi.product.category.CategoryCreationDto;
 import com.springboot.minimartapi.product.category.CategoryMapper;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     private final CategoryMapper categoryMapper;
     private final CategoryRepo categoryRepo;
+    private final FileUploadService fileUploadService;
     @Override
     public List<ProductDto> search(String productName, String productDescription) {
 
@@ -55,7 +58,6 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryMapper.fromCateDto(productCreationDto.category());
         Product product = productMapper.fromProductCreationDto(productCreationDto);
         product.setCategory(category);
-
         productRepo.save(product);
     }
     @Override
@@ -89,6 +91,13 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryMapper.fromCategoryCreationDto(categoryCreationDto);
 
         categoryRepo.save(category);
+
+    }
+    @Transactional
+    @Override
+    public void uploadProductImg(MultipartFile file, Long productId) {
+       String url = fileUploadService.uploadProductPictures(file);
+       productRepo.addImg(productId,url);
 
     }
 

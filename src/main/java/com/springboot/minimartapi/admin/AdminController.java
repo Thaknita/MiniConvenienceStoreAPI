@@ -14,7 +14,10 @@ import com.springboot.minimartapi.transaction.TransactionCreationDto;
 import com.springboot.minimartapi.transaction.TransactionDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -48,10 +51,17 @@ public class AdminController {
     adminService.deleteUser(userId);
   }
 
-  @PostMapping("/products/create")
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(value = "/products/create")
   void  creatProduct(@Valid @RequestBody ProductCreationDto productCreationDto){
       productService.createProduct(productCreationDto);
   }
+  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping(value = "/products/{id}/images/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  void uploadProductImg(@RequestPart MultipartFile file, @PathVariable Long id){
+    productService.uploadProductImg(file, id);
+  }
+
   @PatchMapping("/products/edit/{productId}")
   void  editProduct( @RequestBody ProductEditionDto productEditionDto, @PathVariable Long productId){
       productService.editProduct(productEditionDto, productId);

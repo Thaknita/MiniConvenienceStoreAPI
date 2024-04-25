@@ -1,7 +1,5 @@
 package com.springboot.minimartapi.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.springboot.minimartapi.order.Order;
 import com.springboot.minimartapi.order.OrderItem;
 import com.springboot.minimartapi.product.category.Category;
 import com.springboot.minimartapi.transaction.Transaction;
@@ -44,5 +42,6 @@ public class Product {
    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
    private List<OrderItem> orderItems;
 
+   private String imgUri;
 
 }

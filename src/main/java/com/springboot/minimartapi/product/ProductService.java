@@ -4,6 +4,7 @@ import com.springboot.minimartapi.product.category.CategoryCreationDto;
 import com.springboot.minimartapi.product.dto.ProductCreationDto;
 import com.springboot.minimartapi.product.dto.ProductDto;
 import com.springboot.minimartapi.product.dto.ProductEditionDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface ProductService {
     void deleteProduct(Long productId);
 
     void createCategory(CategoryCreationDto categoryCreationDto);
+
+    void uploadProductImg(MultipartFile file, Long productId);
 
 
 
