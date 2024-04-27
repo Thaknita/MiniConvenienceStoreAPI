@@ -8,13 +8,14 @@ import com.springboot.minimartapi.user.payment.dto.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.dto.PaymentInfoDto;
 import com.springboot.minimartapi.user.address.dto.AddressCreationDto;
 import com.springboot.minimartapi.user.address.dto.AddressEditionDto;
+import jakarta.mail.MessagingException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public interface UserService {
-    void createUser(UserCreationDto userCreationDto);
+    void createUser(UserCreationDto userCreationDto) throws MessagingException;
     void createPaymentInfo(PaymentCreationDto paymentCreationDto);
 
     Set<PaymentInfoDto> getInfoById(Long id);

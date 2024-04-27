@@ -19,9 +19,18 @@ import com.springboot.minimartapi.user.payment.*;
 import com.springboot.minimartapi.user.payment.dto.PaymentCreationDto;
 import com.springboot.minimartapi.user.payment.dto.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.dto.PaymentInfoDto;
+import com.springboot.minimartapi.util.RandomNumber;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,9 +58,13 @@ public class UserServiceImpl implements UserService{
     private final RoleMapper roleMapper;
     private final OrderItemRepo orderItemRepo;
     private final AdminService adminService;
+    private final JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String adminMail;
 
     @Override
-    public void createUser(UserCreationDto userCreationDto) {
+    public void createUser(UserCreationDto userCreationDto) throws MessagingException {
 
         User users = userMapper.fromUserCreationDto(userCreationDto);
 
@@ -61,12 +74,25 @@ public class UserServiceImpl implements UserService{
         if (userRepo.existsByEmailAddress(users.getEmailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
+        String verifyNumber = RandomNumber.getSixDigit();
+
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setSubject("Account Verification");
+        mimeMessageHelper.setText(verifyNumber);
+        mimeMessageHelper.setTo(userCreationDto.emailAddress());
+        mimeMessageHelper.setFrom(adminMail);
+
+        //Send Message
+        javaMailSender.send(mimeMessage);
+
 
         Set<Role> roles = new HashSet<>();
         roles.add(roleMapper.fromRoleDto(RoleDto.builder().id(1).build()));
 
         users.setRoles(roles);
         users.setIsActive(true);
+        users.setVerifyCode(verifyNumber);
         users.setIsVerified(false);
         users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
 

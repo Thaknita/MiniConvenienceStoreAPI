@@ -7,6 +7,7 @@ import com.springboot.minimartapi.user.payment.dto.PaymentEditionDto;
 import com.springboot.minimartapi.user.payment.dto.PaymentInfoDto;
 import com.springboot.minimartapi.user.address.dto.AddressCreationDto;
 import com.springboot.minimartapi.user.address.dto.AddressEditionDto;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    void createUser(@Valid @RequestBody UserCreationDto userCreationDto){
+    void createUser(@Valid @RequestBody UserCreationDto userCreationDto) throws MessagingException {
         userService.createUser(userCreationDto);
     }
     @PostMapping("/payments/create")

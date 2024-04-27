@@ -4,6 +4,7 @@ import com.springboot.minimartapi.auth.dto.AuthDto;
 import com.springboot.minimartapi.auth.dto.LoginDto;
 import com.springboot.minimartapi.auth.dto.UserRegistrationDto;
 import com.springboot.minimartapi.auth.dto.VerifyUserDto;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/register")
-    Map<String, Object> register(@Valid @RequestBody UserRegistrationDto userRegistrationDto){
+    Map<String, Object> register(@Valid @RequestBody UserRegistrationDto userRegistrationDto) throws MessagingException {
       return  authService.registerUser(userRegistrationDto);
     }
 

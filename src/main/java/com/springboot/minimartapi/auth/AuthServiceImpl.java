@@ -11,6 +11,7 @@ import com.springboot.minimartapi.user.UserRepo;
 import com.springboot.minimartapi.user.UserService;
 import com.springboot.minimartapi.util.RandomNumber;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class AuthServiceImpl implements AuthService{
     }
     @Transactional
     @Override
-    public Map<String, Object> registerUser(UserRegistrationDto userRegistrationDto)  {
+    public Map<String, Object> registerUser(UserRegistrationDto userRegistrationDto) throws MessagingException {
         if (!userRegistrationDto.password().equals(userRegistrationDto.confirmPassword())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Password doesn't match!");
         }
