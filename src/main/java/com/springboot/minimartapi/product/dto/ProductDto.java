@@ -1,13 +1,14 @@
 package com.springboot.minimartapi.product.dto;
 
+import com.springboot.minimartapi.product.category.CategoryDto;
 import lombok.Builder;
 
 @Builder
 public record ProductDto(
-      Long id,
+      Long productId,
       String productName,
       String productDescription,
-      Integer categoryId,
+      CategoryDto category,
       Double price,
       Long qtyOnHand
 ) {

@@ -58,13 +58,10 @@ public class UserServiceImpl implements UserService{
     private final RoleMapper roleMapper;
     private final OrderItemRepo orderItemRepo;
     private final AdminService adminService;
-    private final JavaMailSender javaMailSender;
 
-    @Value("${spring.mail.username}")
-    private String adminMail;
 
     @Override
-    public void createUser(UserCreationDto userCreationDto) throws MessagingException {
+    public void createUser(UserCreationDto userCreationDto) {
 
         User users = userMapper.fromUserCreationDto(userCreationDto);
 
@@ -74,28 +71,13 @@ public class UserServiceImpl implements UserService{
         if (userRepo.existsByEmailAddress(users.getEmailAddress())){
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email Address is conflict");
         }
-        String verifyNumber = RandomNumber.getSixDigit();
-
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-        mimeMessageHelper.setSubject("Account Verification");
-        mimeMessageHelper.setText(verifyNumber);
-        mimeMessageHelper.setTo(userCreationDto.emailAddress());
-        mimeMessageHelper.setFrom(adminMail);
-
-        //Send Message
-        javaMailSender.send(mimeMessage);
-
 
         Set<Role> roles = new HashSet<>();
         roles.add(roleMapper.fromRoleDto(RoleDto.builder().id(1).build()));
-
         users.setRoles(roles);
         users.setIsActive(true);
-        users.setVerifyCode(verifyNumber);
         users.setIsVerified(false);
         users.setPassword( passwordEncoder.encode(userCreationDto.password()) );
-
         userRepo.save(users);
 
     }

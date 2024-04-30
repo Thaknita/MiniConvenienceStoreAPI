@@ -1,15 +1,13 @@
 package com.springboot.minimartapi.auth;
 
 
-import com.springboot.minimartapi.auth.dto.AuthDto;
-import com.springboot.minimartapi.auth.dto.LoginDto;
-import com.springboot.minimartapi.auth.dto.UserRegistrationDto;
-import com.springboot.minimartapi.auth.dto.VerifyUserDto;
+import com.springboot.minimartapi.auth.dto.*;
 import jakarta.mail.MessagingException;
 
 import java.util.Map;
 
 public interface AuthService {
+    AuthDto refresh(RefreshTokenDto refreshTokenDto);
 
     AuthDto login(LoginDto loginDto);
     Map<String, Object> registerUser (UserRegistrationDto userRegistrationDto) throws MessagingException;
