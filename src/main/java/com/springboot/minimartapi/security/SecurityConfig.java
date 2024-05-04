@@ -65,7 +65,7 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(request ->
                 request
-                        .requestMatchers("/api/v1/auth/**", "/api/v1/products/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**","/api/v1/public", "/api/v1/products/**").permitAll()
                         .anyRequest().authenticated()
 
         )
